@@ -1,0 +1,73 @@
+@model KuetOverflow.Models.SchoolViewModels.TweetHomePageViewModel
+
+@{
+    ViewData["Title"] = "Tweets";
+    Layout = "_StudentLayout";
+}
+<br/>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="media">
+            <div class="media-left">
+                <div style="float: left">
+                    <img id="user-image-div" class="user-image" src="@Model.User.UserImage" />
+                </div>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><b>@Model.User.UserName</b></h4>
+
+                    <b><p>@Model.User.Follower  Followers</p></b>
+
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <div class="col-md-6">
+        
+        <form asp-action="Create">
+            <div class="form-horizontal">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" name="Body" class="form-control" placeholder="Write text message">
+                            <span class="input-group-btn">
+                                <button type="submit" value="Create" class="btn btn-default">Tweet</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+
+                </div>
+
+            </div>
+        </form>
+        
+        <hr/>
+        @foreach (var tweet in Model.Tweets)
+        {
+            <div class="media">
+                <div class="media-left">
+                    <div style="float: left">
+                        <img id="user-image-div" class="user-image" src="@tweet.UserImage" />
+                    </div>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="/tweets/TweetUser/@Model.User.ID">@tweet.UserName</a></h4>
+                    <p><i>@tweet.DateTime</i></p>
+                    @tweet.Body
+                </div>
+            </div>
+        }
+
+    </div>
+    
+    <div class="col-md-4">
+        <h2>How to Follow</h2>
+        <div id="popular-people"></div>
+    </div>
+</div>

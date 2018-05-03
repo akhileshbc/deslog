@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model KuetOverflow.Models.SchoolViewModels.TweetHomePageViewModel
+
+@{
+    ViewData["Title"] = "Tweets";
+    Layout = "_StudentLayout";
+}
+<br />
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="media">
+            <div class="media-left">
+                <div style="float: left">
+                    <img id="user-image-div" class="user-image" src="@Model.User.UserImage" />
+                </div>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><b>@Model.User.UserName</b></h4>
+                <div id="TweetUserFollower">
+                    <b><p>@Model.User.Follower  Followers</p></b>
+                    @if (@Model.IsFollowing)
+                    {
+                        <span id="addFollower" href="/Follow/AddFollower/@Model.User.ID" class="btn btn-danger">Unfollow</span>
+                    }
+                    @if (@Model.IsFollowing == false)
+                    {
+                        <span id="addFollower" href="/Follow/AddFollower/@Model.User.ID" class="btn btn-primary">Follow </span>
+                    }
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="hidden" id="url">@Model.User.ID</div>
+        <div class="form-horizontal">
+
+            <div class="form-group">
+
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" id="message" class="form-control" placeholder="Say Something...">
+                        <span class="input-group-btn">
+                            <button type="submit" value="Create" class="btn btn-default" onclick="sent_message()">Send Message</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+
+            </div>
+
+        </div>
+
+        <hr />
+        @foreach (var tweet in Model.Tweets)
+        {
+            @*<div class="media">
+                <div class="media-left">
+                    <div style="float: left">
+                        <img id="user-image-div" class="user-image" src="@tweet.UserImage" />
+                    </div>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="/tweets/TweetUser/@tweet.TweetUserID">@tweet.UserName</a></h4>
+                    <p><i>@tweet.DateTime</i></p>
+                    @tweet.Body
+                </div>
+            </div>*@
+            Html.RenderPartial("_tweet", tweet);
+        }
+
+    </div>
+
+    <div class="col-md-4">
+        <h2>How to Follow</h2>
+        <div id="popular-people"></div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model System.Collections.Generic.List<KuetOverflow.Models.TwitterUser>
+
+
+<div class="container">
+    @foreach (var user in @Model)
+    {
+        <div class="media">
+            <div class="media-left">
+                <div style="float: left">
+                    <img id="user-image-div" class="user-image" src="@user.UserImage" />
+                </div>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><b><a asp-action="TweetUser" asp-route-id="@user.ID">@user.UserName</a></b></h4>
+
+                <b><p>@user.Follower  Followers</p></b>
+
+            </div>
+            
+        </div>
+    }
+</div>

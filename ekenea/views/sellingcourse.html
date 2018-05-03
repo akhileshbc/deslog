@@ -1,0 +1,58 @@
+
+<div class="col-lg-3 col-md-3 col-sm-4">
+    <!--Course box start -->
+    <div class="course-box box">
+        <!--header -->
+        <div class="header clearfix">
+            <img ng-src="{{sell.image}}" alt="edu-2" class="img-responsive">
+        </div>
+        
+        <!--Detail--> 
+        <div class="detail clearfix">
+            <div class="price">#
+                {{sell.price}}
+            </div>
+            <h3>
+                <a href >{{sell.courseName}}</a>
+            </h3>
+            <ul class="reviews">
+                <li class="review-stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half"></i>
+                    <i class="fa fa-star-o"></i>
+                </li>
+
+<!--                <li><span>25 Reviews</span></li>-->
+                <li><span><a ng-href="#/register">Register</a></span> </li>
+                <li><span><a ng-if="! sell.selectible">multiple</a></span> </li>
+                
+                       
+            </ul>
+            <p>{{sell.des}}
+            </p> 
+            <ul  class="courses-info">
+                <li>
+                    <h5>Course Duration</h5>
+                    <span>{{sell.courseDuration}}</span>
+                </li>
+                <li>
+                    <h5>Start Date</h5>
+                    <span>{{sell.startDate}}</span>
+                </li>
+                <li>
+                    <h5>Class Duration</h5>
+                    <span>{{sell.classDuration}}</span>
+                </li>
+                <li>
+                    <h5>Training Location</h5>
+                    <span>{{sell.location}}</span>
+                </li>
+            </ul>
+            
+
+        </div>
+    </div>
+    <!-- Course box end --> 
+</div>

@@ -1,0 +1,211 @@
+<!-- Content area start -->
+<div class="content-area" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Form content box start -->
+                <div class="form-content-box">
+                    <!-- details -->
+                    <div class="details">
+                        <!-- Main title -->
+                        <div class="main-title">
+                            <h1><span>Corporate Training</span></h1>
+                        </div>
+                        <div class="tile" style="width: 100px">
+                            <img ng-src="">
+
+                        </div>
+                        <!-- Form start-->
+                        <form name="myform" role="form" novalidate>
+                            <p class="message" ng-show="message">{{ message}}</p>
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="panel-title">Company Info</div>
+
+                                </div>
+                                <div style="padding-top:30px" class="panel-body" >
+
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                        <input type="text" name="companyName" class="form-control" placeholder="Company Name"
+                                               ng-model="user.companyName" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyName.$invalid && myform.companyName.$touched">
+                                            Company name required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <input type="text" name="companyAddress" class="form-control" placeholder="Company Address"
+                                               ng-model="user.companyAddress" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyAddress.$invalid && myform.companyAddress.$touched">
+                                            Company Address required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <input type="text" name="companyCity" class="form-control" placeholder="City"
+                                               ng-model="user.companyCity" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyCity.$invalid && myform.companyCity.$touched">
+                                            City required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <input type="text" name="companyState" class="form-control" placeholder="City"
+                                               ng-model="user.companyState" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyState.$invalid && myform.companyState.$touched">
+                                            Company State required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                        <input type="text" name="companyEmail" class="form-control" placeholder="Company e-mail"
+                                               ng-model="user.companyEmail" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyEmail.$invalid && myform.companyEmail.$touched">
+                                            Company State required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        <input type="text" name="companyPhone" class="form-control" placeholder="Company Phone"
+                                               ng-model="user.companyPhone" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyPhone.$invalid && myform.companyPhone.$touched">
+                                            Company Contact Phone Number required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-star-empty"></i></span>
+                                        <input type="text" name="companyCourse" class="form-control" placeholder="Select your courses here"
+                                               ng-model="user.companyCourse" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyCourse.$invalid && myform.companyCourse.$touched">
+                                            courses required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                        <input type="text" name="companyAttendee" class="form-control" placeholder="How many Staff are attending?"
+                                               ng-model="user.companyAttendee" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyAttendee.$invalid && myform.companyAttendee.$touched">
+                                            Number of Delegate is required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <input type="text" name="companyLocation" class="form-control" placeholder="Preferred training Location"
+                                               ng-model="user.companyLocation" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyLocation.$invalid && myform.companyLocation.$touched">
+                                            Preferred Training Location required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <input type="text" name="companyStartDate" class="form-control" placeholder="Preferred training Start Date"
+                                               ng-model="user.companyStartDate" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.companyStartDate.$invalid && myform.companyStartDate.$touched">
+                                            Preferred Training Start Date required</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="panel-title">Contact Person Info</div>
+
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <input type="text" name="title" class="form-control" placeholder="Enter your title"
+                                               ng-model="user.title" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.title.$invalid && myform.title.$touched">
+                                            Full name required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input type="text" name="fullname" class="form-control" placeholder="Enter your full name"
+                                               ng-model="user.fullname" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.fullname.$invalid && myform.fullname.$touched">
+                                            Full name required</p>
+                                    </div>
+                                    
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <input type="text" name="position" class="form-control" placeholder="Designation/ Position"
+                                               ng-model="user.lastname" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.position.$invalid && myform.position.$touched">
+                                            Last name required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                        <input type="email" name="email" class="form-control" placeholder="Email" ng-model ="user.email" ng-required="true">
+                                        <p class="error validationerror" ng-show="myform.email.$invalid && myform.email.$touched">
+                                            Must be a valid email</p>
+                                    </div>
+
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        <input type="text" name="phone" class="form-control" placeholder="phone"
+                                               ng-model="user.phone" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.phone.$invalid && myform.phone.$touched">
+                                            phone number required</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                        <textarea type="text" name="comment" class="form-control" placeholder="Leave a comment"
+                                                  ng-model="user.comment" ></textarea>
+<!--                                        <p class="error validationerror"
+                                           ng-show="myform.sex.$invalid && myform.sex.$touched">
+                                            sex required</p>-->
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+                                        <span class="block input-icon input-icon-right">
+                                            <input type="password" class="form-control" name = "password" placeholder="Password" ng-model="user.password" required/>
+                                            <small class="errorMessage" data-ng-show="myform.password.$touched && myform.password.$invalid"> Enter Password.</small>
+                                        </span>
+
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+                                        <span class="block input-icon input-icon-right">
+                                            <input type="password" class="form-control" name="password2" placeholder="Password Again" ng-model="user.password2" password-match="user.password" required/>                                
+                                            <small class="errorMessage" data-ng-show="myform.password2.$dirty && myform.password2.$error.required"> Enter password again.</small>
+
+                                            <small class="errorMessage" data-ng-show="myform.password2.$dirty && myform.password2.$error.passwordNoMatch && !signupForm.password2.$error.required"> Password do not match.</small>
+
+                                        </span>
+
+                                        <br>	
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group input-group">
+                                
+                                <button type="submit" ng-click ="signUp(user)" class="button-sm button-theme btn-block" ng-disabled ="myform.$invalid">
+                                    <i class="glyphicon glyphicon-log-in"></i>
+                                    Signup</button>
+
+                            </div>
+                        </form>
+                        <!-- Form end-->
+
+                        <!-- Footer -->
+                        <div class="footer">
+                            <span>
+                                I want to <a ng-href="#/login">return to login</a>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Form content box end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

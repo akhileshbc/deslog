@@ -1,0 +1,33 @@
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="overlay">
+        <div class="container">
+            <div class="breadcrumb-area">
+                <h1>Courses Grid</h1>
+                <ul class="breadcrumbs">
+                    <li><a href="">Training</a></li>
+                    <li class="active">Courses</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sub Banner end -->
+<div class="content-area5 course-section">
+
+    <div class="container" >
+        <div class="main-title">
+            <h1><span>Courses</span>  Grid</h1>
+
+        </div>
+        <div class="row">
+            <div ng-repeat="data in m.deslog">
+                <div selling-course sell="data" select="m.select" selections="m.selections(arg1)"
+                     paymentproceed="m.payWithPaystack(arg1, arg2, arg3, arg4)" changeroute="m.changeroute(arg1)"></div>
+            </div>
+            
+        </div>
+
+    </div>
+</div> 

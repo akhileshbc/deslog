@@ -1,0 +1,95 @@
+<!-- Content area start -->
+<div class="content-area" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Form content box start -->
+                <div class="form-content-box">
+                    <!-- details -->
+                    <div class="details">
+                        <!-- Main title -->
+                        <div class="main-title">
+                            <h1><span>Signup</span></h1>
+                        </div>
+                        
+                        <!-- Form start-->
+                        <form name="myform" role="form" novalidate>
+                            <p class="message" style="color: red" ng-show="message">{{ message}}</p>
+                            <div class="form-group">
+                                <input type="text" name="firstname" class="input-text" placeholder="First Name"
+                                       ng-model="user.firstname" ng-required="true">
+                                <p class="error validationerror"
+                                   ng-show="myform.firstname.$invalid && myform.firstname.$touched">
+                                    First name required</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="middlename" class="input-text" placeholder="Middle Name (optional)"
+                                       ng-model="user.middlename" ng-required="false">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="lastname" class="input-text" placeholder="Last Name"
+                                       ng-model="user.lastname" ng-required="true">
+                                <p class="error validationerror"
+                                   ng-show="myform.lastname.$invalid && myform.lastname.$touched">
+                                    Last name required</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" class="input-text" placeholder="Email" ng-model ="user.email" ng-required="true">
+                                <p class="error validationerror" ng-show="myform.email.$invalid && myform.email.$touched">
+                                    Must be a valid email</p>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="phone" class="input-text" placeholder="phone"
+                                       ng-model="user.phone" ng-required="true">
+                                <p class="error validationerror"
+                                   ng-show="myform.phone.$invalid && myform.phone.$touched">
+                                    phone number required</p>
+                            </div>
+                            <div class="form-group">
+                                <select type="text" name="sex" class="input-text" ng-options="sex.sex for sex in gender"
+                                        ng-model="user.selectedItem" ng-required="true"></select>
+                                <p class="error validationerror"
+                                   ng-show="myform.selectedItem.$invalid && myform.selectedItem.$touched">
+                                    sex required</p>
+                            </div>
+                            <div class="form-group">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="password" class="form-control" name = "password" placeholder="Password" ng-model="user.password" required/>
+                                    <small class="errorMessage" data-ng-show="myform.password.$touched && myform.password.$invalid"> Enter Password.</small>
+                                </span>
+
+                            </div>
+                            <div class="form-group">
+                                <span class="block input-icon input-icon-right">
+                                    <input type="password" class="form-control" name="password2" placeholder="Password Again" ng-model="user.password2" password-match="user.password" required/>                                
+                                    <small class="errorMessage" data-ng-show="myform.password2.$dirty && myform.password2.$error.required"> Enter password again.</small>
+
+                                    <small class="errorMessage" data-ng-show="myform.password2.$dirty && myform.password2.$error.passwordNoMatch && !signupForm.password2.$error.required"> Password do not match.</small>
+
+                                </span>
+
+                                <br>	
+                                <div class="form-group">
+                                    <button type="submit" ng-if="! status" ng-click ="signUp(user)" class="button-md button-theme btn-block" ng-disabled ="myform.$invalid">Signup</button>
+                                    <button  ng-if="status" style="background: #FFF" class="button-md button-theme btn-block" ng-disabled ="myform.$invalid">Signup</button>
+
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Form end-->
+
+                        <!-- Footer -->
+                        <div class="footer">
+                            <span>
+                                I want to <a ng-href="#/login">return to login</a>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Form content box end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
