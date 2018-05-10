@@ -251,6 +251,22 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
         };
     })();
     
+    //file upload method
+    $scope.uploadFile = function(){
+        var file = $scope.myFile;
+        console.log('file is ' );
+        console.dir(file);
+        var uploadUrl = "uploader";
+        courseService.uploadFileToUrl(uploadUrl, file).then(function(results) {
+            //$scope.message = results.message;
+            console.log(results);
+            courseService.toast(results);
+            if (results.status == "success") {
+                //$location.path('courseregistration');
+            }
+        });
+    };
+    
     /**paystack methods here
     *
     **/

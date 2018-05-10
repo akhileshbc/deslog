@@ -44,23 +44,19 @@ myApp.factory('courseService', ['$http', 'toaster', function($http, toaster) { /
                     encodeURIComponent(name) + '&countryCode=' +
                     encodeURIComponent(countryCode));
         };
-        obj.upload = function(q, upload) {
-            return $http({
-                method: 'POST',
-                url: serviceBase + q,
-                data: upload,
-                transformRequest: angular.identity,
-                headers: {
-                    'content-Type': undefined,
-                    enctype:'multipart/form-data'
-                }
-            });
-            
-
-        };
         
+       obj.uploadFileToUrl = function(q, file){
+           var formData = new FormData();
+           formData.append('image', file);
+           return $http.post(serviceBase + q, formData, {
+               transformRequest: angular.identity,
+            headers: {'Content-Type':undefined, enctype:'multipart/form-data'}
+           }).then(function(results) {
+                return results.data;
 
-
+            });
+        
+        };
         return obj;
 
     }]);

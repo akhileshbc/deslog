@@ -7,6 +7,12 @@ myApp.config(['$routeProvider',
             templateUrl: 'views/404.html',
             controller: ''
         })
+        .when('/upload', {
+                title: 'upload file',
+                templateUrl: 'views/courseupload.html',
+                controller: 'courseController'
+                //role: '0'
+            })
         .when('/training/hselevel', {
                 title: 'HSE Level 1, 2 & 3 (WSO)',
                 templateUrl: 'views/hselevel.html',

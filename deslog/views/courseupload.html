@@ -11,12 +11,19 @@
                         <div class="main-title">
                             <h1><span>Upload Course Now</span></h1>
                         </div>
+                        <p class="message" style="color: red"  ng-show="message"> {{ message }} <span>
+                            
                         <!-- Form start -->
                         <form>
-                            <input type="file" class="form-control" file-model="myFile" required>
+                            <input type="file" class="form-control" name="image" file-model="myFile" required>
                             <button class="submit btn btn-danger" type="submit" ng-click="uploadFile()"> Create  </button>
+<!--                            <div ng-controller = "myCtrl">
+                                <input type="file" file-model="myFile"/>
+                                <button ng-click="uploadFile()">upload me</button>
+                            </div>-->
+
                         </form>    
-                            <!-- Form end -->
+                        <!-- Form end -->
                     </div>
 
                 </div>
