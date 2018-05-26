@@ -1,0 +1,253 @@
+<nav class="navbar-custom">
+    <span class="open-slide">
+        <a target="_self" href="#" onclick="openSlideMenu()">
+            <span>&times;</span>
+        </a>
+
+    </span>
+    <ul class="navbar-nav-custom">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
+    </ul>
+</nav>
+<div id="side-menu" class="side-nav">
+    <a target="_self" href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
+    <!--  <a href="#" class="">home</a>
+     <a href="#" class="">about</a>
+     <a href="#" class="">services</a>
+     <a href="#" class="">contact</a>-->
+    <ul class="nav components">
+        <li class="dropdown">
+            <a tabindex="0" data-toggle="dropdown" data-submenu="" aria-expanded="false">
+                Pages
+            </a>
+            <ul class="dropdown-menu">
+                <li><a target="_self" href="#tab1default" data-toggle="tab" aria-expanded="true">Home</a></li>
+                <li><a target="_self" href="#tab2default" data-toggle="tab" aria-expanded="true">About</a></li>
+                <li><a target="_self" href="#tab3default" data-toggle="tab" aria-expanded="true">Contact US</a></li>
+                <li><a target="_self" href="#tab4default" data-toggle="tab" aria-expanded="true">Footer</a></li>
+                <li><a target="_self" href="#tab5default" data-toggle="tab" aria-expanded="true">Unknown</a></li>
+                <li><a target="_self" href="#tab6default" data-toggle="tab" aria-expanded="true">Unknown</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+<div id="main">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-body">
+            <div class="tab-content">
+                <!--Banner section-->
+                <div class="tab-pane fade active in" id="tab1default">
+                    <h3>Banner section</h3>
+                    <div class="course-features">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <p class="message" style="color: red"  ng-show="message"> {{ message}} <span>
+                                        <!-- Form start -->
+                                        <form>
+                                            <input type="file" class="form-control" name="image" file-model="myFile" required>
+                                            <button class="submit btn btn-danger" type="submit" ng-click="uploadFile()">upload</button>
+                                        </form> 
+                                        <div class="form-group">
+                                            <label for="usr">Name:</label>
+                                            <input type="text" class="form-control" id="usr">
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Banner section ends here-->
+                <div class="tab-pane fade features" id="tab2default">
+                    Properties condition start 
+                    <div class="course-features">
+                        <h3>Course Features</h3>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li>
+                                        <i class="fa fa-clock-o"></i>Starts: July 22,17
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-book"></i>Class Time: 9:00 - 11:00
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-fw fa-calendar"></i>Duration 8 Months
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li>
+                                        <i class="fa fa-exclamation-circle"></i>July 29, 2017
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-graduation-cap"></i>Institution AIUB University
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li>
+                                        <i class="fa fa-user"></i>Seats Available 125 Student
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-check-square"></i>Balcony
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4>Course Price:$270</h4>
+                        <button type="submit" class="btn button-sm button-theme">Join This Course</button>
+                    </div>
+                    Properties condition end 
+                </div>
+                <div class="tab-pane fade technical" id="tab3default">
+                    Advantages start 
+                    <div class="advantages">
+                        <h3>Advantages</h3>
+                        <ul>
+                            <li><span>1</span>Live project end to end software testing training Included.</li>
+                            <li><span>2</span>Information packed practical training starting from basics to advanced testing techniques.</li>
+                            <li><span>3</span>Over 37 lectures and 55.5 hours of content!</li>
+                            <li><span>4</span>Learn Software Testing and Automation basics from a professional trainer from your own desk.</li>
+                            <li><span>5</span>Practical assignments at the end of every session.</li>
+                            <li><span>6</span>Lorem ipsum dolor sit amet consectetuer adipi</li>
+                            <li><span>7</span>Course content designed by considering current software testing technology and the job market.</li>
+                        </ul>
+                    </div>
+                    Advantages end 
+                </div>
+                <div class="tab-pane fade" id="tab4default">
+                    Our teachers start 
+                    <h3>Our Teachers</h3>
+                    <div class="row">
+                        <div class="our-teachers">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                Teachers box start 
+                                <div class="teachers-box ">
+                                    Teachers img 
+                                    <a href="teachers.html" class="teachers-img">
+                                        <img src="img/teachers/teacher-1.jpg" alt="teacher-1" class="img-responsive">
+                                    </a>
+                                    Teachers content 
+                                    <div class="teachers-content">
+                                        title 
+                                        <h1 class="title">
+                                            <a href="teachers.html">John Antony</a>
+                                        </h1>
+                                        Subject 
+                                        <h3 class="subject">Teacher / English</h3>
+                                        paragraph 
+                                        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                        Social list 
+                                        <ul class="social-list clearfix">
+                                            <li>
+                                                <a href="#" class="facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="linkedin">
+                                                    <i class="fa fa-linkedin"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="google">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="rss">
+                                                    <i class="fa fa-rss"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                Teachers box end 
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                Teachers box start 
+                                <div class="teachers-box ">
+                                    Agent img 
+                                    <a href="teachers.html" class="teachers-img">
+                                        <img src="img/teachers/teacher-2.jpg" alt="teacher-2" class="img-responsive">
+                                    </a>
+                                    Teachers content 
+                                    <div class="teachers-content">
+                                        title 
+                                        <h1 class="title">
+                                            <a href="teachers.html">John Antony</a>
+                                        </h1>
+                                        Subject 
+                                        <h3 class="subject">Teacher / English</h3>
+                                        paragraph 
+                                        <p>lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                        Social list 
+                                        <ul class="social-list clearfix">
+                                            <li>
+                                                <a href="#" class="facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="linkedin">
+                                                    <i class="fa fa-linkedin"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="google">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="rss">
+                                                    <i class="fa fa-rss"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                Teachers box end 
+                            </div>
+                        </div>
+                    </div>
+                    Our teachers end 
+                </div>
+                <div class="tab-pane fade" id="tab5default">
+                    Inside course start  
+                    <div class="inside-course">
+                        <h3>Video</h3>
+                        <iframe src="" allowfullscreen=""></iframe>
+                    </div>
+                    Inside course end 
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function openSlideMenu() {
+        document.getElementById('side-menu').style.width = '250px';
+        document.getElementById('main').style.marginLeft = '250px';
+    }
+    function closeSlideMenu() {
+        document.getElementById('side-menu').style.width = '0';
+        document.getElementById('main').style.marginLeft = '0';
+    }
+</script>

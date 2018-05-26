@@ -15,6 +15,7 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
     $scope.doLogin = function(customer) {
         $scope.message = 'Please wait while we confirm your identity';
         $scope.status = true;
+        console.log(customer);
         userServices.post('login', {
             customer: customer
         }).then(function(results) {

@@ -1,5 +1,5 @@
 
-<div class="col-lg-3 col-md-3 col-sm-4">
+<div class="col-lg-3 col-md-3 col-sm-4 ">
     <!--Course box start -->
     <div class="course-box box">
         <!--header -->
@@ -26,9 +26,8 @@
 
 <!--                <li><span>25 Reviews</span></li>-->
                 <li><span><a ng-href="#/register">Register</a></span> </li>
-                <li><span><a ng-if="! sell.selectible">multiple</a></span> </li>
-                
-                       
+                <li><span><a ng-if=" sell.selectible" ng-click="changeroute()">multiple</a></span> </li>
+                               
             </ul>
             <p>{{sell.des}}
             </p> 

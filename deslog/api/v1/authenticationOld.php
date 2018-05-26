@@ -47,6 +47,7 @@ $app->post('/signUp', function() use ($app) {
     $r = json_decode($app->request->getBody());
     verifyRequiredParams(array('email', 'lastname', 'password'), $r->customer);
     require_once 'passwordHash.php';
+    require_once './Deslogmailer.php';
     $db = new DbHandler();
     $firstname = $r->customer->firstname;
     //$middlename = $r->customer->middlename;
@@ -61,11 +62,20 @@ $app->post('/signUp', function() use ($app) {
         $tabble_name = "customers_auth";
         $column_names = array('firstname', 'middlename', 'lastname', 'email', 'phone', 'sex', 'password');
         $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+        $mailer = new Deslogmailer($email, $phone);
         if ($result != NULL) {
             $response["status"] = "success";
             $response["message"] = "User account created successfully";
             $response["email"] = $email;
             $response["uid"] = $result;
+            $mailMessage = "We appreciate you for using our platform. Welcome";
+            /* @var $mailer type */
+            $mailer = $mailer->sendMail($lastname .",". $firstname, $mailMessage);
+            if($mailer == "success"){
+                $response["mailer"] = "we've sent you and email, please  check your mail";
+            }  else {
+                $response["mailer"] = "we could not send you a mail. it appears something is wrong somewhere.";
+            }
             if (!isset($_SESSION)) {
                 session_start();
             }
@@ -250,5 +260,40 @@ $app->post('/uploader', function() use ($app) {
    }
 });
 
-
+$app->post('/banner', function() use ($app) {
+    $response = array();
+    $r = json_decode($app->request->getBody());
+    //verifyRequiredParams(array('courseTitle', 'cost'), $r->course);
+    if(isset($_FILES['image'])){
+      $file_name = $_FILES['image']['name'];
+      $file_size =$_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      $file_type=$_FILES['image']['type'];
+      $tmp = explode('.', $file_name);
+      $file_extension = end($tmp);
+      $file_ext=strtolower($file_extension);
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+          $response["status"] = "error";
+         $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 2097152){
+         $response["status"] = "error";
+         $response["message"]='File size must be excately 2 MB';
+      }
+      
+      if(empty($response)==true){
+         move_uploaded_file($file_tmp,"posters/".$file_name);
+         $response["status"] = "Success";
+         $response["message"] = "Your file has been save successfully";
+         echoResponse(200, $response);
+      }else{
+          echoResponse(201, $response);
+      }
+   }
+});
+?>
 ?>

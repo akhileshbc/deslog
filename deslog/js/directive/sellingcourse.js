@@ -8,86 +8,34 @@ myApp.directive('sellingCourse', ['$rootScope', '$location', 'userServices', '$w
                 selections: '&',
                 select: '=',
                 paymentproceed: '&',
-                changeroute: '&'
+                changeroute: '&',
+                add: '&add'
 
-            },
-//            controller: function(scope, element, attributes) {
-//                var toggle = 'OFF';
-//                var count = 3;
-//                var undoclass = function() {
-//                    element.attr('class', 'col-lg-3 col-md-3 col-sm-4');
-//
-//                };
-//                scope.combo = function() {
-//                    if (document.getElementById("expense").value == "OFF") {
-//                        document.getElementById("expense").value = "ON";
-//                        //remove course from array and change the class attribute
-//                        if (scope.sell.type === 'single' && scope.sell.selectible === true) {
-//
-//                            if (scope.select.length !== count) {
-//                                element.attr('class', 'selected col-lg-3 col-md-3 col-sm-4');
-//
-//                                scope.selections({arg1: scope.sell.courseName});
-////                        courseService.toastcourse({
-////                            'courseID' : 'ekene',
-////                            'des': 'ekene'
-////                        });
-//                                //toaster.pop(scope.courseID, "", scope.des, 10000, 'trustedHtml');
-//                                alert(scope.select);
-//                                console.log(scope.select);
-//
-//                            } else {
-//                                alert("you can't select more than three causes");
-//
-//                            }
-//                            ;
-//
-//                            if (scope.select.length === count) {
-//                                //scope.changeroute({arg1: scope.sell.courseName});
-//
-//                                $location.path('/register');
-//                                scope.$apply();
-//                                //replace();
-//
-////                          var url = "http://" + $window.location.host + "/register";
-////                         
-////                          $window.location.href = url;
-////                          alert("running to make registration");
-//
-////                            scope.paymentproceed({arg1: $rootScope.email, arg2: scope.sell.price, 
-////                                arg3: scope.sell.courseName, arg4: scope.select});
-////                        
-//                            }
-//                        }
-//                        ;
-//
-//                    } else if (document.getElementById("expense").value == "ON") {
-//                        document.getElementById("expense").value = "OFF";
-//                        //add course to array and change the class attibute
-//                        var index = scope.select.indexOf(scope.sell.courseName);
-//                        if (index > -1) {
-//                            scope.select.splice(index, 1);
-//                        }
-//                        alert("the element with the ID has be deleted from the array" + scope.select);
-//                        undoclass();
-//                        //$location.path('/register');
-//                        //alert(scope.select);
-//                        console.log(scope.select);
-//                    }
-//                    ;
-//
-//                };
-//            },
-//            
+            },           
             templateUrl: 'views/sellingcourse.html',
             link: function(scope, element, attributes) {
                 var undoclass = function() {
                     element.attr('class', 'col-lg-3 col-md-3 col-sm-4');
 
                 };
-                scope.$on('changeClass', function(e, data) {
-                    undoclass();
-                    scope.select = [];
+                var addCssRule = function(){
+                     element.attr('class', 'selected col-lg-3 col-md-3 col-sm-4');
+                };
+                scope.$on('removeCssRule', function(event, selectedCourse) {
+                    if(selectedCourse.course == scope.sell.courseID){
+                        undoclass();
+                    }
+                    
+                    //scope.select = [];
+                });
+                scope.$on('addCssRule', function(event,selectedCourse){
+                    //preventDefault();
+                    console.log(selectedCourse.course + " " + "in link function");
+                    //console.log(event);
+                    if(selectedCourse.course == scope.sell.courseID){
+                        addCssRule();
+                    }
+                    
                 });
 
                 element.bind('dblclick', function(e) {
@@ -182,6 +130,15 @@ myApp.directive('sellingCourse', ['$rootScope', '$location', 'userServices', '$w
 
                 });
             }
+//            ,
+//            controller: function($scope){
+//                var add = this;
+//                add.callAddCourse = $scope.addCourseToCourseArray;
+//                    
+//                
+//            },
+//            //this is my girlfriend petname
+//            controllerAs: 'belle'
 
         };
     }]);

@@ -3,6 +3,7 @@ myApp.factory('courseService', ['$http', 'toaster', function($http, toaster) { /
         var serviceBase = 'api/v1/';
 
         var obj = {};
+        obj.select = [];
         obj.toast = function(data) {
             toaster.pop(data.status, "", data.message, 10000, 'trustedHtml');
         };
@@ -47,6 +48,7 @@ myApp.factory('courseService', ['$http', 'toaster', function($http, toaster) { /
         
        obj.uploadFileToUrl = function(q, file){
            var formData = new FormData();
+           //formData.append('attachment', attachment);
            formData.append('image', file);
            return $http.post(serviceBase + q, formData, {
                transformRequest: angular.identity,

@@ -7,40 +7,10 @@ myApp.config(['$routeProvider',
             templateUrl: 'views/404.html',
             controller: ''
         })
-        .when('/test', {
-                title: 'test',
-                templateUrl: 'views/test.html',
-                controller: ''
-                //role: '0'
-            })
-            .when('/admin/dashboard', {
-                title: 'Admin dashboard',
-                templateUrl: 'views/admin/admin-dashboard.html',
-                controller: ''
-                //role: '0'
-            })
         .when('/upload', {
                 title: 'upload file',
                 templateUrl: 'views/courseupload.html',
                 controller: 'courseController'
-                //role: '0'
-            })
-            .when('/blog/detail', {
-                title: 'Blog details page',
-                templateUrl: 'views/Blog/blog.details.html',
-                controller: ''
-                //role: '0'
-            })
-            .when('/blog/posts', {
-                title: 'Blog Posts',
-                templateUrl: 'views/Blog/blog.card.html',
-                controller: ''
-                //role: '0'
-            })
-            .when('/course/details', {
-                title: 'upload file',
-                templateUrl: 'views/Courses/course.details.html',
-                controller: 'courseController as m'
                 //role: '0'
             })
         .when('/training/hselevel', {

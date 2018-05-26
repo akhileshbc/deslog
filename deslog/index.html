@@ -8,9 +8,7 @@
   <link href='https://fonts.googleapis.com/css?family=Lato:400,100,700,900' rel='stylesheet' type='text/css'>
   <!--<link rel="stylesheet" href="css/style.css">-->
   <script type="text/javascript" src="js/edu_js/jquery-2.2.0.min.js"></script>
-   <!-- underscore -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
+   
     <!-- angular -->
   <script src="js/lib/angular/angular.min.js"></script>
   
@@ -22,7 +20,7 @@
   
   <script src="js/lib/angular/toaster.js"></script>
   <link rel="stylesheet" href="js/lib/angular/toaster.css">  
-  
+  <script src="js/infinite-carousel.js"></script>
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <!--This library comes from the edu_care and must not be change. it starts here--> 
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -31,6 +29,7 @@
     <link rel="stylesheet" href="css/settings.css">   
   <!-- External CSS libraries -->
   <link rel="stylesheet" type="text/css" href="css/edu_css/custom.css">
+  <link rel="stylesheet" type="text/css" href="css/edu_css/infinite-carousel.css">
     <link rel="stylesheet" type="text/css" href="css/edu_css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/edu_css/animate.min.css">
     <link rel="stylesheet" type="text/css" href="css/edu_css/bootstrap-submenu.css">
@@ -78,32 +77,32 @@
             <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                 <ul class="social-list clearfix pull-right">
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-whatsapp">08096807303 </i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-facebook"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-twitter"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-linkedin"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-google-plus"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href>
                             <i class="fa fa-rss"></i>
                         </a>
                     </li>
@@ -133,7 +132,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="#/" class="logo">
-                    <img src="img/logos/deslogenergy.jpeg" alt="logo">
+                    <img ng-src="img/logos/deslogenergy.jpeg" alt="logo"/>
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -141,24 +140,19 @@
                 <ul class="nav navbar-nav">
                     
                     <li class="dropdown active">
-                        <a ng-href="#/" tabindex="0" data-toggle="dropdown" data-submenu="" aria-expanded="false">
+                        <a ng-href="#/" >
                             Home
                         </a>
                         
                     </li>
                     <li class="dropdown">
-                        <a ng-href="#/about" tabindex="0" data-toggle="dropdown" data-submenu="" aria-expanded="false">
+                        <a ng-href="#/about" >
                             About Us
                         </a>
-                        <!-- <ul class="dropdown-menu">
-                            <li><a href="courses.html">Courses</a></li>
-                            <li><a href="courses-2.html">Courses 2</a></li>
-                            <li><a href="courses-details.html">Courses Details</a></li>
-                            <li><a href="courses-details-2.html">Courses Details 2</a></li>
-                        </ul> -->
+                        
                     </li>
                      <li class="dropdown ">
-                        <a ng-href="#/contact" tabindex="0" data-toggle="dropdown" data-submenu="" aria-expanded="false">
+                        <a ng-href="#/contact" >
                             Contact Us
                         </a>
                         
@@ -287,7 +281,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
                     <li>
-                        <div class="navbar-search-box">
+<!--                        <div class="navbar-search-box">
                             <form class="navbar-search" method="GET">
                                 <input type="search" placeholder="Search......" name="search" class="navbar-search-input" onkeyup="buttonUp();" required>
                                 <button type="submit" class="navbar-search-submit">Go</button>
@@ -295,7 +289,7 @@
                                     <i class="fa fa-search"></i>
                                 </span>
                             </form>
-                        </div>
+                        </div>-->
                     </li>
                 </ul>
                 
@@ -341,6 +335,7 @@
 <script src="js/services/modalservice.js"></script>
 
 <script src="js/directive/fileupload.js"></script>
+<script src="js/directive/discountedCourses.js"></script>
 <script src="js/directive/coursetile.js"></script>
 <script src="js/directive/recentcourse.js"></script>
 <script src="js/directive/sellingcourse.js"></script>
@@ -348,6 +343,8 @@
  
 <script src="js/controllers/courseController.js"></script>
 <script src="js/controllers/usersController.js"></script>
+
+
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

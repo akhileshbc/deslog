@@ -64,7 +64,7 @@
                     <div class="main-title">
                         <h1><span>Who</span > <span style="color: black">we are</span></h1>
                     </div>
-                    <!--<h2>Students Testimonial</h2>-->
+
                     <div class="text-custom">
                         International oil and gas, quality Health Safety and Environment Training provider
                     </div>
@@ -579,81 +579,37 @@
 
             <h3>2018 First Quarter Training Calendar</h3>
         </div>
-        <div class="row">
+        <div class=" row ">
+
             <div ng-repeat="data in m.deslog">
-                <div selling-course sell="data" select="m.select" selections="m.selections(arg1)"
-                     paymentproceed="m.payWithPaystack(arg1, arg2, arg3, arg4)" changeroute="m.changeroute(arg1)"></div>
+                <div selling-course sell="data" select="m.select" selections="m.selections(data)"
+                     paymentproceed="m.payWithPaystack(arg1, arg2, arg3, arg4)" changeroute="m.changeroute(data)"
+                     add="m.addCourseToCourseArray(course)">
+
+                </div>
             </div>
-            <!-- -->
-<!--            <div class="col-md-6 col-md-offset-3">
-    <h1>Home</h1>
-    <p>{{m.bodyText}}</p>
-    <button ng-click="m.openModal('custom-modal-1')">Open Modal 1</button>
-    <button ng-click="m.openModal('custom-modal-2')">Open Modal 2</button>
+
+
+        </div>
+    </div>
 </div>
-
-<modal id="custom-modal-1">
-    <div class="modal">
-        <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text: <input type="text" ng-model="m.bodyText" />
-            </p>
-            <button ng-click="m.closeModal('custom-modal-1');">Close</button>
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>
-
-<modal id="custom-modal-2">
-    <div class="modal">
-        <div class="modal-body">
-            <h1 style="height:1000px">A Tall Custom Modal!</h1>
-            <button ng-click="m.closeModal('custom-modal-2');">Close</button>
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>
-            -->
-            <!--the most-->
-            
-            
-
-        </div>
-<!--        <table class="table">
-            <thead>
-                <tr>
-                    <th>Course Title</th>
-                    <th>Start Date</th>
-                    <th>Training Location</th>
-                    <th>Cost</th>
-                    <th>Seats</th>
-                    <th>Status</th>
-                    <td>Enrollment</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="course in m.course">
-                    <td>{{course.courseTitle}}</td>
-                    <td>{{course.startingDate}}</td>
-                    <td>{{course.trainingLocation}}</td>
-                    <td>{{course.cost}}</td>
-                    <td>{{course.seatTaken}}/{{course.seatAvail}}</td>
-                    <td>{{course.status}}</td>
-                    <td><a   ng-href="#/register/{{course.courseTitle}}"><button style= "color: #eb5800" class="btn btn-default">SignUp</button></a></td>
-                </tr>
-
-            </tbody>
-        </table>-->
-    </div>
-</div>    
 <!--course table ends here-->
-
 <div class="clearfix"></div>
-
-
-
-<!-- Counters strat -->
+<div class="blog-section content-area">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1><span>Discounted </span>Courses</h1>
+        </div>
+        <div class="row">
+            <div ng-repeat="discounted in m.discountedCourse">
+                <div discounted-courses course="discounted"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<!-- Counters start -->
 <div class="counters">
     <div class="overlay">
         <div class="container">
@@ -696,8 +652,7 @@
 <!-- Counters end -->
 
 <!-- Partners block start -->
-
-<div class="partners-block"  ng-non-bindable>
+<div class="partners-block" ng-non-bindable>
     <div class="container">
         <div class="main-title">
             <h1><span>Our</span> Accreditations, Partners and Professional Memberships</h1>
@@ -708,42 +663,42 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#">
-                                    <img src="img/brand/audiojungle.png" alt="audiojungle">
+                                <a target="_self" href="#">
+                                    <img src="img/brand/audiojungle.png" alt="Tetranyble">
                                 </a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#">
-                                    <img src="img/brand/themeforest.png" alt="themeforest">
+                                <a target="_self" href="#">
+                                    <img src="img/brand/themeforest.png" alt="tetranyble">
                                 </a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#">
-                                    <img src="img/brand/tuts.png" alt="tuts">
+                                <a target="_self" href="#">
+                                    <img src="img/brand/tuts.png" alt="tetranyble">
                                 </a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#">
-                                    <img src="img/brand/graphicriver.png" alt="graphicriver">
+                                <a target="_self" href="#">
+                                    <img src="img/brand/graphicriver.png" alt="tetranyble">
                                 </a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#">
-                                    <img src="img/brand/codecanyon.png" alt="codecanyon">
+                                <a target="_self" href="#">
+                                    <img src="img/brand/codecanyon.png" alt="tetranyble">
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <a class="left carousel-control" href="#ourPartners" data-slide="prev"><i class="fa fa-chevron-left icon-prev"></i></a>
-                    <a class="right carousel-control" href="#ourPartners" data-slide="next"><i class="fa fa-chevron-right icon-next"></i></a>
+                    <a target="_self" class="left carousel-control" href="#ourPartners" data-slide="prev"><i class="fa fa-chevron-left icon-prev"></i></a>
+                    <a target="_self" class="right carousel-control" href="#ourPartners" data-slide="next"><i class="fa fa-chevron-right icon-next"></i></a>
                 </div>
             </div>
         </div>

@@ -1,20 +1,8 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$location', '$http', 'courseService', 'ModalService', 'userServices' ,function($scope, $rootScope, $routeParams, $location, $http, courseService, ModalService, userServices) {
 
     //$scope.courses = {};
     var that = this;
     that.can = false;
-//    that.$watch('select', function(newValue, oldValue){
-//        if(newValue.length ==3){
-//            that.can = true; 
-//        }
-//    });
-    that.select = [];
     
     
 //    that.remove = function(index) {
@@ -27,7 +15,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
 //        $scope.files = files;
 //    };
     that.selections = function(selected) {
-        that.select.push(selected);
+        courseService.select.push(selected);
     };
     that.getselect = function(){
       return that.select;  
@@ -37,10 +25,10 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
          //that.select = [];
           $rootScope.$broadcast('changeClass', {call: 123});
      };
-     that.changeroute = function(route){
-         $location.path('dashboard');
-     };
-    
+//     that.changeroute = function(route){
+//         $location.path('dashboard');
+//     };
+//    
         that.initController = function() {
             that.bodyText = 'This text can be updated in modal 1';
         };
@@ -53,6 +41,40 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
         that.closeModal = function(id){
             ModalService.Close(id);
         };
+        //###########################################################################
+        //       DISCOUNTED COURSES
+        //###########################################################################
+        that.discountedCourse = [
+            {
+                day: '5',
+                month: 'may',
+                title: 'Train the Trainer',
+                intro: 'This course trains the trainer.'
+            },
+            {
+                day: '5',
+                month: 'may',
+                title: 'Train the Trainer',
+                intro: 'This course trains the trainer.'
+            },
+            {
+                day: '5',
+                month: 'may',
+                title: 'Train the Trainer',
+                intro: 'This course trains the trainer.'
+            },
+            {
+                day: '5',
+                month: 'may',
+                title: 'Train the Trainer',
+                intro: 'This course trains the trainer.'
+            }
+        ];
+            
+        //##############################################################################
+        //              DISCOUNTED COURSES END HERE
+        //##############################################################################
+        
     that.deslog = [
         {
             type: 'single',
@@ -77,7 +99,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
              combocost: '120000',
             selectible: true,
             courseDuration: '3 weeks',
-            courseID: '1234456',
+            courseID: '1234457',
             classDuration: '4 hours',
             price: '120000',
             courseName: 'Nehbosh',
@@ -95,7 +117,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
              combocost: '120000',
             selectible: true,
             courseDuration: '3 weeks',
-            courseID: '1234456',
+            courseID: '1234459',
             classDuration: '4 hours',
             price: '120000',
             courseName: 'Nehbosh',
@@ -114,7 +136,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
             selectible: true,
             courseDuration: '3 weeks',
             des: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna',
-            courseID: '1234456',
+            courseID: '1234410',
             classDuration: '4 hours',
             price: '120000',
             courseName: 'Nehbosh',
@@ -131,7 +153,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
              combocost: '120000',
             selectible: true,
             courseDuration: '4 weeks',
-            courseID: '1234456',
+            courseID: '1234411',
             classDuration: '4 hours',
             price: '80000',
             courseName: 'Android Development (Beginner)',
@@ -149,7 +171,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
              combocost: '120000',
             selectible: true,
             courseDuration: '14 weeks',
-            courseID: '1234456',
+            courseID: '1234412',
             classDuration: '4 hours',
             price: '80000',
             courseName: 'Android Development (Intermediate)',
@@ -164,6 +186,102 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
         }
 
     ];
+    //#######################################################################
+    //              COURSE GRID CONTROLLERS AND SELLING COURSE
+    //#######################################################################
+    /*
+     * @counter hold the number of coourse in the currentCourse Array
+     */
+     var counter = 0;
+    /*
+     * @currentCourse holds courses selected by the user's of this site
+     */
+    that.currentCourse;
+    //this method runs through the @that.select array and returns to the view
+    //it only circle the array and doesn't make any changes
+    
+    that.getcurrentCourse = function(){
+        console.log("i'm getCurrentCourse function" + " " +courseService.select.length);
+        if(courseService.select.length == 0){
+            alert("there's nothing to show. I'm taking you to course grid now.");
+            $location.path('/training/generalcoursegrid');
+            return;
+        }
+        if(counter == 2){
+            counter = 0;
+            console.log(counter + "at the loop when counter=3");
+            that.currentCourse = courseService.select[counter];
+            counter++;
+            console.log(counter + "after counter is been increased");
+            //that.$apply();
+            
+        }else{
+            that.currentCourse = courseService.select[counter];
+            
+            counter++;
+            console.log(counter + "looping through courseService.select");
+            //$rootScope.$apply();
+            //.$apply();
+            
+        }
+        
+    };
+    /*
+     * 
+     * @param {type} selectedCourse 
+     * @returns {undefined}
+     */
+    that.changeroute = function(selectedCourse){
+        var count = 3;
+        var courseID = selectedCourse.courseID;
+        var courseIndex = courseService.select.indexOf(selectedCourse);
+        if(selectedCourse != undefined && courseService.select.length != count && courseIndex == -1){
+            courseService.select.push(selectedCourse);
+            $rootScope.$broadcast('addCssRule', {course: courseID});
+            courseID = null;
+            alert(selectedCourse);
+            //console.log(that.select);
+            alert(courseService.select);
+            //that.$emit("addCssRule", arg);
+        }else if(courseIndex != -1){
+            //alert("remove");
+            //remove the item from the array
+            courseService.select.splice(courseIndex,1);
+            //alert();
+            $rootScope.$broadcast('removeCssRule', {course: courseID});
+            courseID = null;
+            //that.$emit('removeCssRule');
+            alert(selectedCourse + " " + "removed");
+            alert(courseService.select);
+            //console.log(that.select);
+        }
+        
+        if(courseService.select.length == count){
+            that.currentCourse = courseService.select[0];
+            $location.path('/course/details');
+            
+                
+                //$rootScope.$digest();
+                //$scope.$apply();
+        };
+        
+    }; 
+    
+//    $scope.$watch('that.currentCourse', function(newValue, oldValue){
+//        $scope.$apply();
+//    });
+    
+    that.clearCourseArray = function(){
+        
+            courseService.select = [];
+            $location.path('/training/generalcoursegrid');
+//            $scope.$on('$routeChangeStart', function($event, next, current) { 
+//  
+//                
+//            });
+//        
+        
+    };
 
     that.recent = [
         {
@@ -250,8 +368,9 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
             });
         };
     })();
-    
-    //file upload method
+    //#################################################################
+    //                        File upload method
+    //#################################################################
     $scope.uploadFile = function(){
         var file = $scope.myFile;
         console.log('file is ' );

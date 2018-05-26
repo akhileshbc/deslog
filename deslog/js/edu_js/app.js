@@ -6,8 +6,8 @@ $(function () {
         setTimeout(function () {
             $(".page_loader").fadeOut("fast");
         }, 100)
-        $('link[id="style_sheet"]').attr('href', 'css/skins/green-light-2.css');
-        $('.logo img').attr('src', 'img/logos/green-light-2-logo.png');
+//        $('link[id="style_sheet"]').attr('href', 'css/skins/green-light-2.css');
+//        $('.logo img').attr('src', 'img/logos/green-light-2-logo.png');
 
         if($('body .filtr-container').length > 0){
             // Filterizr initialization
@@ -240,3 +240,4 @@ function buttonUp(){
     }
 }
 
+//var infinitecarousel = new InfiniteCarousel('#container', 'horizontal', 8);
