@@ -371,12 +371,12 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
     //#################################################################
     //                        File upload method
     //#################################################################
-    $scope.uploadFile = function(){
+    $scope.uploadFile = function(attachment){
         var file = $scope.myFile;
         console.log('file is ' );
         console.dir(file);
         var uploadUrl = "uploader";
-        courseService.uploadFileToUrl(uploadUrl, file).then(function(results) {
+        courseService.uploadFileToUrl(uploadUrl, file, attachment).then(function(results) {
             //$scope.message = results.message;
             console.log(results);
             courseService.toast(results);

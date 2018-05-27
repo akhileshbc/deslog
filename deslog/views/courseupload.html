@@ -14,9 +14,17 @@
                         <p class="message" style="color: red"  ng-show="message"> {{ message }} <span>
                             
                         <!-- Form start -->
-                        <form>
+                        <form name="myform" role="form" novalidate>
                             <input type="file" class="form-control" name="image" file-model="myFile" required>
-                            <button class="submit btn btn-danger" type="submit" ng-click="uploadFile()"> Create  </button>
+                            
+                            <div class="form-group">
+                                <input type="text" name="intro" class="input-text" placeholder="introduction text"
+                                        ng-model="attachment.intro" ng-required="true">
+                                <p class="error validationerror"
+                                ng-show="myform.intro.$invalid && myform.intro.$touched">
+                                please provide a valid intro</p>
+                            </div>
+                            <button class="submit btn btn-danger" type="submit" ng-click="uploadFile(attachment)"> Create  </button>
 
                         </form>    
                         <!-- Form end -->

@@ -46,8 +46,11 @@ myApp.factory('courseService', ['$http', 'toaster', function($http, toaster) { /
                     encodeURIComponent(countryCode));
         };
         
-       obj.uploadFileToUrl = function(q, file){
+       obj.uploadFileToUrl = function(q, file, attachment){
            var formData = new FormData();
+            angular.forEach(attachment, function(intro, key) {
+                formData.append(key, intro);
+            });
            //formData.append('attachment', attachment);
            formData.append('image', file);
            return $http.post(serviceBase + q, formData, {

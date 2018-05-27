@@ -216,11 +216,26 @@ $app->get('/getAllCourse', function() {
 });
 $app->post('/uploader', function() use ($app) {
     $response = array();
-    $r = json_decode($app->request->getBody());
-    //verifyRequiredParams(array('courseTitle', 'cost'), $r->course);
+    //$r = json_decode($app->request->getBody(), true);
+    //$data = $app->request->getParsedBody();
+    //$image = $app->request->getUploadedFiles();
+    //this program failed here.
+    //echoResponse(201, $data);
+    //echoResponse(201, $image);
+    
+    //return;
+    
+    //$intro = $r->attachment->intro;
+    $attachment = $_POST['intro'];
+    //echoResponse(201, $intro);
+    //return;
+//    echoResponse(201, $attachment);
+//    return;
+    //verifyRequiredParams(array('intro'), $attachment);
+    
     if(isset($_FILES['image'])){
       $file_name = $_FILES['image']['name'];
-      $file_size =$_FILES['image']['size'];
+      $file_size = $_FILES['image']['size'];
       $file_tmp =$_FILES['image']['tmp_name'];
       $file_type=$_FILES['image']['type'];
       $tmp = explode('.', $file_name);
@@ -232,21 +247,49 @@ $app->post('/uploader', function() use ($app) {
       if(in_array($file_ext,$expensions)=== false){
           $response["status"] = "error";
          $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+         echoResponse(201, $response);
+         
       }
       
       if($file_size > 2097152){
          $response["status"] = "error";
          $response["message"]='File size must be excately 2 MB';
+         echoResponse(201, $response);
       }
+      //##############################################################
+      //                db methods here
+      //##############################################################
+    $tabble_name = "bannerimage";
+    $column_names = array('image_url', 'intro');
+    require_once './Image.php';
+    //$image = new Image($attachment,$file_name);
+    $image = (object) array('image_url' => $file_name, 'intro' => $attachment);
+    //$container['upload_directory'] = __DIR__ . '/uploads';
+    $db = new DbHandler();
+    
+    $isBannerExists = $db->getOneRecord("select 1 from bannerimage where image_url='$file_name' or intro = '$attachment'");
+    if (!$isBannerExists) {
+        $result = $db->insertIntoTable($image, $column_names, $tabble_name);
+        if ($result != NULL) {
+            move_uploaded_file($file_tmp,"posters/".$file_name);
+            $response["status"] = "Success";
+            $response["message"] = "Your file has been save successfully";
+            echoResponse(200, $response);
+        }
+    } else {
+        $response["status"] = "error";
+        $response["message"] = "course already exists!";
+        echoResponse(201, $response);
+    }
       
-      if(empty($response)==true){
-         move_uploaded_file($file_tmp,"posters/".$file_name);
-         $response["status"] = "Success";
-         $response["message"] = "Your file has been save successfully";
-         echoResponse(200, $response);
-      }else{
-          echoResponse(201, $response);
-      }
+//      if(empty($response)==true){
+//         move_uploaded_file($file_tmp,"posters/".$file_name);
+//         $response["status"] = "Success";
+//         $response["message"] = "Your file has been save successfully";
+//         echoResponse(200, $response);
+//      }else{
+//          echoResponse(201, $response);
+//      }
    }
 });
 

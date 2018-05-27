@@ -14,13 +14,11 @@
 class Image {
     protected $image_url;
     protected $intro;
-    protected $upload_time;
-    protected $id;
-    public function __construct($image_url, $intro, $upload_time="", $id="") {
+    
+    public function __construct($intro, $image_url) {
         $this->image_url = $image_url;
         $this->intro = $intro;
-        $this->upload_time = $upload_time;
-        $this->id = $id;
+        
     }
 
 }
