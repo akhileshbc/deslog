@@ -1,4 +1,4 @@
-myApp.controller('usersController', function($scope, $rootScope, $routeParams, $location, $http, userServices) {
+myApp.controller('usersController', function($scope, $rootScope, $routeParams, $location, courseService, userServices) {
     //initially set those objects to null to avoid undefined error
     $scope.message = '';
     $scope.status = false;
@@ -117,8 +117,98 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
         });
         handler.openIframe();
     };
-
-
+    //##########################################################################
+    //                  Home Page Banner Data
+    //##########################################################################
+    $scope.banner = [
+        {
+            image: 'img/educare/sidebar-1.jpg',
+            intro: 'welcome to deslog energy',
+            edit: false
+            
+        },
+        {
+            image: 'img/educare/sidebar-1.jpg',
+            intro: 'Train the trainer for deslog energy',
+            edit: false
+        },
+        {
+            image: 'img/educare/sidebar-3.jpg',
+            intro: 'Here we talk about the invicble',
+            edit: false
+            
+        },
+        {
+            image: 'img/educare/sidebar-2.jpg',
+            intro: 'Life is complex in its entirety',
+            edit: false
+            
+        },
+        {
+            image: 'img/educare/sidebar-1.jpg',
+            intro: 'welcome to deslog energy',
+            edit: false
+            
+        },
+        {
+            image: 'img/educare/sidebar-1.jpg',
+            intro: 'Train the trainer for deslog energy',
+            edit: false
+        },
+        {
+            image: 'img/educare/sidebar-3.jpg',
+            intro: 'Here we talk about the invicble',
+            edit: false
+            
+        },
+        {
+            image: 'img/educare/sidebar-2.jpg',
+            intro: 'Life is complex in its entirety',
+            edit: false
+            
+        }
+    ];
+    //##########################################################################
+    //                  Banner Image operation functionalities
+    //##########################################################################
+    $scope.editBannerImage = function(obj){
+        if(obj.edit == false){
+            obj.edit = true;
+        }else{
+            obj.edit = false;
+        }
+        
+    };
+    $scope.deleteBannerImage = function(obj){
+        var index = $scope.banner.indexOf(obj);
+        $scope.banner.splice(index, 1);
+        $scope.$apply();
+    };
+    
+    $scope.uploadBanner = function(attachment, myFile, obj){
+        //var file = $scope.myFile;
+        console.log('file is ' );
+        console.dir(myFile);
+        console.log(attachment);
+        var uploadUrl = "uploader";
+        courseService.uploadFileToUrl(uploadUrl, myFile, attachment).then(function(results) {
+            
+            console.log(results);
+            courseService.toast(results);
+            if (results.status == "success") {
+                $scope.uploadmessage = results.message;
+                setTimeout(function(){
+                    
+                    $scope.$apply(function(){
+                        obj.edit = false;
+                    });
+                }, 500);
+            }
+        });
+    };
+    //##########################################################################
+    //
+    //##########################################################################
     /** Json response of test data sent to paystack.co payment solution system
      * {
      "status": true,

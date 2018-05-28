@@ -13,26 +13,26 @@
     </ul>
 </nav>
 <div id="side-menu" class="side-nav">
-   <a target="_self" href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
-   <!--  <a href="#" class="">home</a>
-    <a href="#" class="">about</a>
-    <a href="#" class="">services</a>
-    <a href="#" class="">contact</a>-->
+    <a target="_self" href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
+    <!--  <a href="#" class="">home</a>
+     <a href="#" class="">about</a>
+     <a href="#" class="">services</a>
+     <a href="#" class="">contact</a>-->
     <ul class="nav components">
         <li class="dropdown">
             <a tabindex="0" data-toggle="dropdown" data-submenu="" aria-expanded="false">
                 Services
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#/services/train">Training & Certifications</a></li>
-                <li><a ng-href="#/services/riskmanagement">HSE & Management Consultancy</a></li>
-                <li><a ng-href="#/services/supplyofchem">Supply of Chemicals & Safety Tools</a></li>
-                <li><a ng-href="#/services/manpower">Manpower Outsourcing</a></li>
-                <li><a ng-href="#/services/environmanagement">Enviromental Management Services</a></li>
-                <li><a ng-href="#/services/corrosioncontrol">NDT & Corrosion Control Services</a></li>
+                <li><a target="_self" href="#tab1default" data-toggle="tab" aria-expanded="true">Home</a></li>
+                <li><a target="_self" href="#tab2default" data-toggle="tab" aria-expanded="true">Contact Us</a></li>
+                <li><a target="_self" href="#tab3default" data-toggle="tab" aria-expanded="true">Footer</a></li>
+                <li><a target="_self" href="#tab4default" data-toggle="tab" aria-expanded="true">Manpower Outsourcing</a></li>
+                <li><a target="_self" href="#tab5default" data-toggle="tab" aria-expanded="true">Enviromental Management Services</a></li>
+                <li><a target="_self" href="#tab6default" data-toggle="tab" aria-expanded="true">NDT & Corrosion Control Services</a></li>
             </ul>
         </li>
-        
+
     </ul>
 </div>
 <div id="main">
@@ -40,32 +40,42 @@
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade active in" id="tab1default">
-                    <div class="mrg-btm-30">
-                        Title 
-                        <h3>Course Description</h3>
-                        paragraph 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel nunc. Proin accumsan elit sed neque euismod fringilla. Curabitur lobortis nunc velit,</p>
-                    </div>
-                    <div class="mrg-btm-30">
-                        Title 
-                        <h3>Requirements</h3>
-                        <div class="requirements">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <ul>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                    </ul>
+                    <div class="course-features">
+                        <h3>Home Banner</h3>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12" ng-repeat="b in banner">
+                                <div class="thumbnail blog-box clearfix">
+                                    <img src="{{b.image}}" alt="edu-6" class="img-responsive">
+                                    <!-- detail -->
+                                    <!--                                        
+                                    <!-- Main title -->
+                                    <div class="main-title-2">
+                                        <h1><a href="#/views/Courses/discounted-course-grid">{{course.title}}</a></h1>
+                                    </div>
+
+                                    <!-- paragraph -->
+                                    <div >
+                                    <p>{{b.intro}}</p>
+                                    <div class="clearfix"></div>
+                                    <!-- Btn -->
+                                    <a href="" class="btn button-sm button-theme" ng-click="editBannerImage(b)">Edit</a>
+                                    <a href="" class="btn button-sm button-theme" ng-click="deleteBannerImage(b)">Delete</a>
+                                    <div ng-if="b.edit">
+                                        <p>{{uploadmessage}}</p>
+                                        <form name="myform" role="form" novalidate>
+                                            <input type="file" class="form-control" name="image" file-model="myFile" required>
+
+                                            <div class="form-group">
+                                                <input type="text" name="intro" class="input-text" placeholder="introduction text"
+                                                       ng-model="attachment.intro" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.intro.$invalid && myform.intro.$touched">
+                                                    please provide a valid intro</p>
+                                            </div>
+                                            <button class="submit btn btn-danger" type="submit" ng-click="uploadBanner(attachment, myFile, obj)">Update</button>
+                                        </form>    
+                                    </div>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <ul>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                        <li><i class="fa fa-angle-right"></i>Lorem ipsum dolor sit amet consectetuer</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +123,7 @@
                         <h4>Course Price:$270</h4>
                         <button type="submit" class="btn button-sm button-theme">Join This Course</button>
                     </div>
-                    Properties condition end 
+                    <!--Properties condition end -->
                 </div>
                 <div class="tab-pane fade technical" id="tab3default">
                     Advantages start 
@@ -252,16 +262,16 @@
 
 </div>
 
-        <script>
-            function openSlideMenu(){
-                document.getElementById('side-menu').style.width = '250px';
-                document.getElementById('main').style.marginLeft = '250px';
-            }
-            function closeSlideMenu(){
-                document.getElementById('side-menu').style.width = '0';
-                document.getElementById('main').style.marginLeft = '0';
-            }
-        </script>
+<script>
+    function openSlideMenu() {
+        document.getElementById('side-menu').style.width = '250px';
+        document.getElementById('main').style.marginLeft = '250px';
+    }
+    function closeSlideMenu() {
+        document.getElementById('side-menu').style.width = '0';
+        document.getElementById('main').style.marginLeft = '0';
+    }
+</script>
 
 <!--<div class="container" style="
      padding-top: 30px;
