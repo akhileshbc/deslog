@@ -10,8 +10,61 @@ myApp.factory('pageContent', ['$http', 'toaster', function($http, toaster) { // 
         obj.toastcourse = function(data) {
             toaster.pop(data.courseID, "", data.des, 10000, 'trustedHtml');
         };
+        obj.delete = function(q){
+            return $http.delete(serviceBase + q).then(function(results) {
+                return results.data;
+            });
+        };
+        //########################################################
+        // Banner image data handling 
+        //########################################################
+        obj.deleteBanner = function(q, obj){
+            return $http.post(serviceBase + q, obj).then(function(results) {
+                return results.data;
+            });
+        };
+        obj.getBannerData = function() {
+            return $http.get(serviceBase + 'bannerData');
+        };
+        
+        obj.uploadFileToUrl = function(q, file, attachment){
+           var formData = new FormData();
+            angular.forEach(attachment, function(intro, key) {
+                formData.append(key, intro);
+            });
+           //formData.append('attachment', attachment);
+           formData.append('image', file);
+           return $http.post(serviceBase + q, formData, {
+               transformRequest: angular.identity,
+            headers: {'Content-Type':undefined, enctype:'multipart/form-data'}
+           }).then(function(results) {
+                return results.data;
+
+            });
+        
+        };
+        obj.updateUploadFileToUrl = function(q, file, attachment, previousData){
+           var formData = new FormData();
+            angular.forEach(attachment, function(intro, key) {
+                formData.append(key, intro);
+            });
+            angular.forEach(previousData, function(data, key) {
+                formData.append(key, data);
+            });
+           //formData.append('attachment', attachment);
+           formData.append('image', file);
+           return $http.post(serviceBase + q, formData, {
+               transformRequest: angular.identity,
+            headers: {'Content-Type':undefined, enctype:'multipart/form-data'}
+           }).then(function(results) {
+                return results.data;
+
+            });
+        
+        };
         obj.get = function(q) {
             return $http.get(serviceBase + q).then(function(results) {
+                
                 return results.data;
             });
         };

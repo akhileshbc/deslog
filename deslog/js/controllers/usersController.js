@@ -1,6 +1,7 @@
-myApp.controller('usersController', function($scope, $rootScope, $routeParams, $location, courseService, userServices) {
+myApp.controller('usersController', function($scope, $rootScope, $routeParams, $location, pageContent, courseService, userServices) {
     //initially set those objects to null to avoid undefined error
     $scope.message = '';
+    
     $scope.status = false;
     $scope.gender = [
         {'sex': 'Male'},
@@ -120,57 +121,20 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
     //##########################################################################
     //                  Home Page Banner Data
     //##########################################################################
-    $scope.banner = [
-        {
-            image: 'img/educare/sidebar-1.jpg',
-            intro: 'welcome to deslog energy',
-            edit: false
-            
-        },
-        {
-            image: 'img/educare/sidebar-1.jpg',
-            intro: 'Train the trainer for deslog energy',
-            edit: false
-        },
-        {
-            image: 'img/educare/sidebar-3.jpg',
-            intro: 'Here we talk about the invicble',
-            edit: false
-            
-        },
-        {
-            image: 'img/educare/sidebar-2.jpg',
-            intro: 'Life is complex in its entirety',
-            edit: false
-            
-        },
-        {
-            image: 'img/educare/sidebar-1.jpg',
-            intro: 'welcome to deslog energy',
-            edit: false
-            
-        },
-        {
-            image: 'img/educare/sidebar-1.jpg',
-            intro: 'Train the trainer for deslog energy',
-            edit: false
-        },
-        {
-            image: 'img/educare/sidebar-3.jpg',
-            intro: 'Here we talk about the invicble',
-            edit: false
-            
-        },
-        {
-            image: 'img/educare/sidebar-2.jpg',
-            intro: 'Life is complex in its entirety',
-            edit: false
-            
-        }
-    ];
+    $scope.banner ;
+    
     //##########################################################################
     //                  Banner Image operation functionalities
     //##########################################################################
+    $scope.newBanner = false;
+    $scope.newBannerImage = function(obj){
+        if($scope.newBanner == false){
+            $scope.newBanner = true;
+        }else{
+            $scope.newBanner = false;
+        }
+        
+    };
     $scope.editBannerImage = function(obj){
         if(obj.edit == false){
             obj.edit = true;
@@ -180,35 +144,241 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
         
     };
     $scope.deleteBannerImage = function(obj){
-        var index = $scope.banner.indexOf(obj);
-        $scope.banner.splice(index, 1);
-        $scope.$apply();
+            //'api/v1/deleteBanner'
+            pageContent.deleteBanner('deleteBanner', {data : obj}).then(function (data){
+                //console.log(data.data);
+                
+                if(data.status == "success"){
+                    $scope.bannerMessageDelete = data.message;
+                    var index = $scope.banner.indexOf(obj);
+                    $scope.banner.splice(index, 1);
+                    setTimeout(function(){
+                        console.log(data.message);
+                        console.log(data.data);
+                        $scope.bannerMessageDelete = "";
+                        //$scope.$apply();
+                    }, 4000);
+                }
+            });
     };
     
+    /**
+     * content of the banner section is loaded from the server to the ui here
+     */
+    pageContent.get('bannerData').then(function(data) {
+        console.log("Scouting at userscontroller");
+                $scope.banner = data.data ;
+    });
+    //##################################################################
+    //        service object, function data
+    //##################################################################
+    
+    $scope.servicesdata = [
+        {
+            serviceimage: 'img/educare/edu-2.jpg',
+            aboutservice: 'welcome to deslog energy',
+            servicetitle: 'gas clearanceand all enquiries',
+            servicepageurl: '/service/image',
+            edit: false
+            
+        },
+        {
+            serviceimage: 'img/educare/edu-2.jpg',
+            aboutservice: 'welcome to deslog energy',
+            servicetitle: 'gas clearanceand all enquiries',
+            servicepageurl: '/service/image',
+            edit: false
+        },
+        {
+            serviceimage: 'img/educare/edu-2.jpg',
+            aboutservice: 'welcome to deslog energy',
+            servicetitle: 'gas clearanceand all enquiries',
+            servicepageurl: '/service/image',
+            edit: false
+            
+        },
+        {
+           serviceimage: 'img/educare/edu-2.jpg',
+            aboutservice: 'welcome to deslog energy',
+            servicetitle: 'gas clearanceand all enquiries',
+            servicepageurl: '/service/image',
+            edit: false
+            
+        },
+        {
+            serviceimage: 'img/educare/edu-2.jpg',
+            aboutservice: 'welcome to deslog energy',
+            servicetitle: 'gas clearanceand all enquiries',
+            servicepageurl: '/service/image',
+            edit: false
+            
+        }
+        
+    ];
+    // variable determining state of components
+    $scope.newService = false;
+    $scope.uploadService = null; // messaging varible to pass returned promise message
+    
+    // data being fetch from the database
+    pageContent.get('servicedata').then(function(data) {
+        //console.log("Scouting for services data. please waiting!");
+        console.log(data.data);
+        $scope.servicesdata = data.data ;
+    });
+    // Refreshes the page upon successful upload of service
+    var refreshservice = function(){
+        pageContent.get('servicedata').then(function(data) {
+        //console.log("Scouting for services data. please waiting!");
+        //console.log(data.data);
+        $scope.servicesdata = data.data ;
+    });
+    };
+    
+    $scope.uploadNewService = function(){
+        if($scope.newService == false){
+            $scope.newService = true;        
+        }else{
+            $scope.newService = false;
+        }
+    };
+    
+    $scope.updateService = function($event, newservice, myFile, obj){
+        
+        var target = $event.currentTarget.id;
+        var uploadUrl = "createservice";
+        //var uploadUrl = "updateservice";
+        if(target == "new"){
+            //uploadUrl = "createservice";
+        }
+        //var uploadUrl = "updateservice";
+        pageContent.updateUploadFileToUrl(uploadUrl, myFile, newservice, obj).then(function(results) {
+            pageContent.toast(results);
+            if (results.status) {
+                $scope.uploadmessage = results.message;
+                setTimeout(function(){
+                     $scope.$apply(function(){
+                        obj.edit = false;
+                        $scope.uploadmessage = "";
+                    });
+                }, 4000);
+                if(target != "new"){
+                    refreshpage();
+                }else{
+                    refreshservice();
+                    
+                }
+                 
+            }
+        });
+    };
+    $scope.newservice = false;
+    $scope.editService = function(obj){
+        //console.log(obj);
+        //var index = $scope.servicesdata.indexOf(obj);
+        //$scope.servicesdata.splice(index, 1);
+        if($scope.newservice == false){
+            $scope.newservice =true;
+            
+        }else{
+            $scope.newservice = false;
+            //obj.edit = "0";
+        }
+    };
+    $scope.deleteService = function(obj){
+            //'api/v1/deleteBanner'
+            pageContent.deleteBanner('deleteService', {data : obj}).then(function (data){
+                //console.log(data.data);
+                
+                if(data.status){
+                    $scope.deleteServiceMessage = data.message;
+                    var index = $scope.servicesdata.indexOf(obj);
+                    $scope.servicesdata.splice(index, 1);
+                    setTimeout(function(){
+                        console.log(data.message);
+                        console.log(data.data);
+                        $scope.deleteServiceMessage = "";
+                        //$scope.$apply();
+                    }, 4000);
+                }
+            });
+    }
+    //###################################################################
+    // service object, function and data ends here
+    //###################################################################
+    
+    //this model interract with the model view
+    var refreshpage = function(){
+        pageContent.get('bannerData').then(function(data) {
+        $scope.banner = data.data ;
+      });
+    };
+    $scope.getmodelObject = function(){
+        
+    };
     $scope.uploadBanner = function(attachment, myFile, obj){
         //var file = $scope.myFile;
         console.log('file is ' );
         console.dir(myFile);
         console.log(attachment);
         var uploadUrl = "uploader";
-        courseService.uploadFileToUrl(uploadUrl, myFile, attachment).then(function(results) {
+        pageContent.uploadFileToUrl(uploadUrl, myFile, attachment).then(function(results) {
             
             console.log(results);
             courseService.toast(results);
-            if (results.status == "success") {
+            if (results.status) {
+                $scope.uploadmessage = results.message;
+                setTimeout(function(){
+                        $scope.newBanner = false;
+                        $scope.uploadmessage = "";
+                }, 4000);
+                refreshpage();
+            }
+        });
+    };
+    $scope.updateUploadBanner = function(attachment, myFile, obj){
+        //var file = $scope.myFile;
+        //console.log('file is ' );
+        //console.dir(myFile);
+        //console.log(attachment);
+        var uploadUrl = "uploadupdatenow";
+        pageContent.updateUploadFileToUrl(uploadUrl, myFile, attachment, obj).then(function(results) {
+            
+            //console.log(results);
+            pageContent.toast(results);
+            if (results.status) {
                 $scope.uploadmessage = results.message;
                 setTimeout(function(){
                     
                     $scope.$apply(function(){
                         obj.edit = false;
+                        $scope.uploadmessage = "";
                     });
-                }, 500);
+                }, 4000);
+                refreshpage(); 
             }
         });
     };
-    //##########################################################################
-    //
-    //##########################################################################
+    //#########################################################################
+    //                      who we are section
+    //#########################################################################
+    $scope.savewhoweare = function(whoweare){
+        console.log(whoweare);
+        pageContent.post('whoweare', 
+        {content: whoweare}).then(function(results){
+            console.log(results);
+            $scope.message = results.message;
+            setTimeout(function(){
+                    
+                    $scope.$apply(function(){
+                        //obj.edit = false;
+                        $scope.message = "";
+                    });
+                }, 4000);
+        });
+            
+        
+    };
+   
     /** Json response of test data sent to paystack.co payment solution system
      * {
      "status": true,

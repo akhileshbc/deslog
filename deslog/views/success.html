@@ -42,20 +42,47 @@
                 <div class="tab-pane fade active in" id="tab1default">
                     <div class="course-features">
                         <h3>Home Banner</h3>
+                        <div class="course-features">
+                            <div >
+                                <button class="submit btn btn-info"  ng-click="newBannerImage()">New Banner</button>
+                            
+                            </div>
+                            
+                            <div ng-if="newBanner" style="margin-top: 15px">
+                                <p class="message" style="color: red"  ng-show="message"> {{ uploadmessage }} <span>
+                                        <br>
+                                <!-- Form start -->
+                                <form name="myform" role="form" novalidate>
+                                    <input type="file" class="form-control" name="image" file-model="myFile" required>
+                                    <br>
+                                    <div class="form-group">
+                                        <input type="text" name="intro" class="input-text form-control" placeholder="introduction text"
+                                                ng-model="attachment.intro" ng-required="true">
+                                        <p class="error validationerror"
+                                        ng-show="myform.intro.$invalid && myform.intro.$touched">
+                                        please provide a valid intro</p>
+                                    </div>
+                                    <button class="submit btn btn-danger" type="submit" ng-click="uploadBanner(attachment, myFile, obj)"> Create  </button>
+
+                                </form> 
+                            </div>
+                            <br>
+                        </div>
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-12" ng-repeat="b in banner">
-                                <div class="thumbnail blog-box clearfix">
-                                    <img src="{{b.image}}" alt="edu-6" class="img-responsive">
+                            <div class="col-md-4 col-sm-4 col-xs-12" ng-repeat="b in banner" style="padding-top: 15px">
+                                <div class="course-box box">
+                                    <img src="img/banner/{{b.image_url}}" alt="edu-6" class="img-responsive">
                                     <!-- detail -->
                                     <!--                                        
                                     <!-- Main title -->
                                     <div class="main-title-2">
-                                        <h1><a href="#/views/Courses/discounted-course-grid">{{course.title}}</a></h1>
+                                        <h1><a href="#/views/Courses/discounted-course-grid"></a></h1>
                                     </div>
 
                                     <!-- paragraph -->
                                     <div >
                                     <p>{{b.intro}}</p>
+                                    <p style="color: hotpink">{{bannerMessageDelete}}</p>
                                     <div class="clearfix"></div>
                                     <!-- Btn -->
                                     <a href="" class="btn button-sm button-theme" ng-click="editBannerImage(b)">Edit</a>
@@ -63,7 +90,7 @@
                                     <div ng-if="b.edit">
                                         <p>{{uploadmessage}}</p>
                                         <form name="myform" role="form" novalidate>
-                                            <input type="file" class="form-control" name="image" file-model="myFile" required>
+                                            <input type="file"  name="image" file-model="myFile" required>
 
                                             <div class="form-group">
                                                 <input type="text" name="intro" class="input-text" placeholder="introduction text"
@@ -72,11 +99,147 @@
                                                    ng-show="myform.intro.$invalid && myform.intro.$touched">
                                                     please provide a valid intro</p>
                                             </div>
-                                            <button class="submit btn btn-danger" type="submit" ng-click="uploadBanner(attachment, myFile, obj)">Update</button>
+                                            <button class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="updateUploadBanner(attachment, myFile, b)">Update</button>
                                         </form>    
                                     </div>
                                 </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-features">
+                        <h3>Who we are section</h3>
+                        <div class="row">
+                            <form name="myform" role="form" novalidate>
+                                <p style="color:hotpink" class="message" ng-show="message">{{ message}}</p>
+                                <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                        <input type="text" name="heading" class="form-control" placeholder="heading..."
+                                               ng-model="whoweare.heading" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.heading.$invalid && myform.heading.$touched">
+                                            please provide heading</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-blackboard"></i></span>
+                                        <input type="text" name="intro" class="form-control" placeholder="introduction..."
+                                               ng-model="whoweare.intro" ng-required="true">
+                                        <p class="error validationerror"
+                                           ng-show="myform.intro.$invalid && myform.intro.$touched">
+                                            we would also require intro text</p>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i ></i></span>
+                                        <textarea type="text" name="content" class="form-control" placeholder="content..."
+                                                  ng-model="whoweare.content" ng-required="true"></textarea>
+                                        <p class="error validationerror"
+                                           ng-show="myform.content.$invalid && myform.content.$touched">
+                                            content also please</p>
+                                    </div>
+                                <div class="form-group input-group">
+                                    <button class="btn btn-info" ng-click="updatewhoweare(whoweare)">Update</button>
+                                    <button class="btn btn-warning" ng-click="savewhoweare(whoweare)">Save</button>
+                                </div >
+                                
+                            </form> 
+                            
+                        </div>
+                    </div>
+                    <div class="course-features">
+                        <div >
+                            <button class="submit btn btn-info"  ng-click="uploadNewService()">Register New Service</button>
+
+                        </div>
+
+                        <div ng-if="newService" style="margin-top: 15px">
+                            <p class="message" style="color: red"  ng-show="deleteServiceMessage"> {{deleteServiceMessage}} <span>
+                                    <br>
+                                    <!-- Form start -->
+                                    <form name="myform" role="form" novalidate>
+                                        <input type="file" class="form-control" name="image" file-model="myFile" required>
+                                        <br>
+                                        <div class="form-group">
+                                                <input type="text" name="servicetitle" class="input-text form-control" placeholder="service page title"
+                                                       ng-model="serviceall.servicetitle" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.servicetitle.$invalid && myform.servicetitle.$touched">
+                                                    please provide a service page title</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="servicepageurl" class="input-text form-control" placeholder="service page url"
+                                                       ng-model="serviceall.servicepageurl" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.servicepageurl.$invalid && myform.servicepageurl.$touched">
+                                                    please provide service page url</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="servicepageurl" class="input-text form-control" placeholder="About service"
+                                                       ng-model="serviceall.serviceabout" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.serviceabout.$invalid && myform.serviceabout.$touched">
+                                                    please provide service intro text</p>
+                                            </div>
+                                            <button id="new" class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="updateService( $event, serviceall, myFile, b)">Create</button>
+
+                                    </form> 
+                        </div>
+                        <br>
+                    </div>
+                    <div class="course-features">
+                        <h3>Our services</h3>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 " ng-repeat="c in servicesdata">
+                                <!-- Course box start -->
+                                <div class="course-box box">
+                                    <!--header -->
+                                    <div class="header clearfix">
+                                        <img src="img/educare/{{c.filename}}" alt="edu-2" class="img-responsive">
+                                    </div>
+                                    <!-- Detail -->
+                                    <div class="detail clearfix">
+
+                                        <h3>
+                                            <a href="{{c.servicepageurl}"> {{c.servicetitle}}</a>
+                                        </h3>
+                                        <p>
+                                            {{c.serviceabout}}
+                                        </p>
+                                        
+                                        <a href="" class="btn button-sm button-theme" ng-click="editService(c)">Edit</a>
+                                    <a href="" class="btn button-sm button-theme" ng-click="deleteService(c)">Delete</a>
+                                    <div ng-if="newservice">
+                                        <p>{{uploadmessage}}</p>
+                                        <form name="myform" role="form" novalidate>
+                                            <input type="file"  name="image" file-model="myFile" required>
+
+                                            <div class="form-group">
+                                                <input type="text" name="servicetitle" class="input-text form-control" placeholder="service page title"
+                                                       ng-model="serviceall.servicetitle" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.servicetitle.$invalid && myform.servicetitle.$touched">
+                                                    please provide a service page title</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="servicepageurl" class="input-text form-control" placeholder="service page url"
+                                                       ng-model="serviceall.servicepageurl" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.servicepageurl.$invalid && myform.servicepageurl.$touched">
+                                                    please provide service page url</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="servicepageurl" class="input-text form-control" placeholder="About service"
+                                                       ng-model="serviceall.serviceabout" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.serviceabout.$invalid && myform.serviceabout.$touched">
+                                                    please provide service intro text</p>
+                                            </div>
+                                            <button class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="updateService(serviceall, myFile, b)">Update</button>
+                                        </form>    
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+                                <!-- Course box end -->
                             </div>
                         </div>
                     </div>

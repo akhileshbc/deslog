@@ -1,9 +1,9 @@
-myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$location', '$http', 'courseService', 'ModalService', 'userServices' ,function($scope, $rootScope, $routeParams, $location, $http, courseService, ModalService, userServices) {
+myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$location', '$http', 'courseService', 'ModalService', 'pageContent', 'userServices' ,function($scope, $rootScope, $routeParams, $location, $http, courseService, ModalService, pageContent, userServices) {
 
     //$scope.courses = {};
     var that = this;
     that.can = false;
-    
+    that.banner = [];
     
 //    that.remove = function(index) {
 //        var selected = [];
@@ -41,6 +41,41 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
         that.closeModal = function(id){
             ModalService.Close(id);
         };
+        deleteBannerImage = function(b){
+            pageContent.delete(b.id).success(function (data){
+                if(data.status == "success"){
+                    that.bannerMessage = data.data.id + "removed" + data.status;
+                }
+                that.bannerMessage = data.status + ":" + " banner with ID:" + data.data.id + "remove failed";
+            });
+        };
+        //#####################################################################
+        //          home page banner and others
+        //#####################################################################
+        pageContent.get('bannerData').then(function(data) {
+            //console.log("Scouting for home page banner data now. please wait!");
+           console.log("in pagecontent service");
+           //conslole.log(results.data);
+           console.log(data.data);
+           that.banner = data.data ;
+                //console.log(data.data);
+                //console.log(that.banner1);
+//            that.banner = data;
+//            console.log(data);
+//            if(data.status == "success"){
+//            that.banner = data;
+//                //console.log(data);
+//         }
+        //console.log(data.message);
+    });
+    that.whoweare;
+    pageContent.get('whoweare').then(function(data) {
+        that.whoweare = data.data[0];
+        console.log(data.data);
+        if(data.status == "success"){
+            
+         }
+    });
         //###########################################################################
         //       DISCOUNTED COURSES
         //###########################################################################
@@ -335,7 +370,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
 
     courseService.getcountries().success(function(data) {
         that.course = data;
-        console.log(data);
+        //console.log(data);
     });
 
     //initially set those objects to null to avoid undefined error

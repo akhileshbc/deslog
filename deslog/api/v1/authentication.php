@@ -214,25 +214,131 @@ $app->get('/getAllCourse', function() {
         echoResponse(201, $response);
     }
 });
-$app->post('/uploader', function() use ($app) {
+
+$app->get('/bannerData', function() {
     $response = array();
-    //$r = json_decode($app->request->getBody(), true);
-    //$data = $app->request->getParsedBody();
-    //$image = $app->request->getUploadedFiles();
-    //this program failed here.
-    //echoResponse(201, $data);
-    //echoResponse(201, $image);
+    $db = new DbHandler();
+    $table_name = "bannerimage";
+    $getAllBanner = $db->getallRecord("SELECT * FROM $table_name");
+    if ($getAllBanner) {
+        //$response["status"] = "success";
+        //$response["message"] = "course is being shipped in now successfully";
+        $response["data"] = $getAllBanner;
+        //$response["status"] = "success";
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name . "There's no course data to display";
+        echoResponse(201, $response);
+    }
+});
+$app->get('/whoweare', function() {
+    $response = array();
+    $db = new DbHandler();
+    $table_name = "who_we_are";
+    $getAllBanner = $db->getallRecord("SELECT * FROM $table_name");
+    if ($getAllBanner) {
+        //$response["status"] = "success";
+        //$response["message"] = "course is being shipped in now successfully";
+        $response["data"] = $getAllBanner;
+        //$response["status"] = "success";
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name . "There's no course data to display";
+        echoResponse(201, $response);
+    }
+});
+
+
+$app->post('/deleteBanner', function() use ($app){
+    $response = array();
     
-    //return;
-    
-    //$intro = $r->attachment->intro;
-    $attachment = $_POST['intro'];
-    //echoResponse(201, $intro);
-    //return;
-//    echoResponse(201, $attachment);
-//    return;
-    //verifyRequiredParams(array('intro'), $attachment);
-    
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('id', 'image_url'), $r->data);
+    $id = $r->data->id;
+    $table_name = "bannerimage";
+    //$table_name = "bannerimage";
+     $db = new DbHandler();
+//     $path = "/img/banner";
+//$rdi = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME);
+//foreach (new RecursiveIteratorIterator($rdi, RecursiveIteratorIterator::SELF_FIRST) as $file => $info) {
+//    
+//            $response["status"] = "success";
+//            $response["data"] = $file;
+//            echoResponse(200, $response);
+//}
+//     $dir = new DirectoryIterator(dirname(__FILE__));
+//     foreach ($dir as $fileinfo) {
+//        if (!$fileinfo->isDot()) {
+//          //var_dump($fileinfo->getFilename());
+//          $response["status"] = "success";
+//          $response["data"] = $fileinfo->getFilename();
+//          echoResponse(200, $response);
+//        }
+//     }
+     //return;
+    $deleteBanner = $db->deleteOneRecord($table_name, $id);
+    if ($deleteBanner) {
+        //$response["status"] = "success";
+        
+        
+        $response["status"] = "success";
+        $response["data"] = $deleteBanner;
+        $response["message"] = "Banner with ID: $id is been deleted successfully";
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name . "There's no course data to display";
+        echoResponse(201, $response);
+    }
+});
+//####################################################################################
+//                    service api calls here
+//####################################################################################
+
+$app->get('/servicedata', function() {
+    $response = array();
+    $db = new DbHandler();
+    $table_name = "our_service";
+    $getAllService = $db->getallRecord("SELECT * FROM $table_name");
+    if ($getAllService) {
+        $response["status"] = "success";
+        $response["message"] = "course is being shipped in now successfully";
+        $response["data"] = $getAllService;
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name . "There's no course data to display";
+        echoResponse(201, $response);
+    }
+});
+$app->post('/deleteService', function() use ($app){
+    $response = array();
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('serviceabout', 'id', 'servicetitle'), $r->data);
+    $id = $r->data->id;
+    $table_name = "our_service";
+    $db = new DbHandler();
+    $deleteService = $db->deleteOneRecord($table_name, $id);
+    if ($deleteService) {
+        $response["status"] = "success";
+        $response["data"] = $deleteService;
+        $response["message"] = "Service with ID: $id is been deleted successfully";
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name. "doesn't contain the information you're trying to delete";
+        echoResponse(201, $response);
+    }
+});
+$app->post('/createservice', function() use ($app) {
+    $response = array();
+    $servicetitle = $_POST['servicetitle'];
+    $servicepageurl = $_POST['servicepageurl'];
+    $serviceabout =$_POST['serviceabout'];
+    //$previousFileName = $_POST['filename'];
+    //$id = $_POST['id'];
     if(isset($_FILES['image'])){
       $file_name = $_FILES['image']['name'];
       $file_size = $_FILES['image']['size'];
@@ -256,6 +362,162 @@ $app->post('/uploader', function() use ($app) {
          $response["message"]='File size must be excately 2 MB';
          echoResponse(201, $response);
       }
+      $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+      //warning! file name overwriten here 
+      $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
+      //##############################################################
+      //                db methods here
+      //##############################################################
+    $table_name = "our_service";
+    $column_names = array('filename', 'serviceabout', 'servicepageurl',
+        'servicetitle', 'edit');
+    require_once './Image.php';
+    //$image = new Image($attachment,$file_name);
+    $edit = 0;
+    $image = (object) array('filename' => $file_name, 'serviceabout' => $serviceabout,
+        'servicepageurl' => $servicepageurl, 'servicetitle' =>$servicetitle,
+        'edit' =>$edit);
+    //$container['upload_directory'] = __DIR__ . '/uploads';
+    $db = new DbHandler();
+    $path = $_SERVER['DOCUMENT_ROOT'] . "/deslog/deslog/img/educare/";
+    //$deleteService = $db->deleteOneRecord($tabble_name, $id);
+    $isServiceExists = $db->getOneRecord("select 1 from ".$table_name." where filename='$file_name' or servicetitle = '$servicetitle'");
+    //$deleteBanner = $db->deleteOneRecord($tabble_name, $id);
+    //if($deleteService){
+        if (!$isServiceExists) {
+            $result = $db->insertIntoTable($image, $column_names, $table_name);
+            if ($result != NULL) {
+            
+                move_uploaded_file($file_tmp, $path .$file_name);
+                $response["status"] = "Success";
+                $response["message"] = "Your file has been save successfully";
+                echoResponse(200, $response);
+            }else{
+                $response["status"] = "error";
+                $response["message"] = "requested action could not be completed. something technical but don't worry we're on it!";
+                echoResponse(201, $response);
+            }
+        } else {
+        $response["status"] = "error";
+        $response["message"] = "it appears this banner already exist in this system!";
+        echoResponse(201, $response);
+        }
+//    }else{
+//        $response["status"] = "error";
+//        $response["message"] = "There seems to be a problem with overwritting the previous file. Try again in awhile!";
+//        echoResponse(201, $response);
+//    }
+ }
+});
+$app->post('/updateservice', function() use ($app) {
+    $response = array();
+    $servicetitle = $_POST['servicetitle'];
+    $servicepageurl = $_POST['servicepageurl'];
+    $serviceabout =$_POST['serviceabout'];
+    $previousFileName = $_POST['image'];
+    $id = $_POST['id'];
+    if(isset($_FILES['image'])){
+      $file_name = $_FILES['image']['name'];
+      $file_size = $_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      //$file_type=$_FILES['image']['type'];
+      $tmp = explode('.', $file_name);
+      $file_extension = end($tmp);
+      $file_ext=strtolower($file_extension);
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+          $response["status"] = "error";
+         $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+         echoResponse(201, $response);
+         
+      }
+      
+      if($file_size > 2097152){
+         $response["status"] = "error";
+         $response["message"]='File size must be excately 2 MB';
+         echoResponse(201, $response);
+      }
+      $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+      //warning! file name overwriten here 
+      $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
+      //##############################################################
+      //                db methods here
+      //##############################################################
+    $tabble_name = "our_service";
+    $column_names = array('filename', 'serviceabout', 'servicepageurl',
+        'servicetitle', 'edit');
+    require_once './Image.php';
+    //$image = new Image($attachment,$file_name);
+    $edit = "false";
+    $image = (object) array('filename' => $file_name, 'serviceabout' => $serviceabout,
+        'servicepageurl' => $servicepageurl, 'servicetitle' =>$servicetitle,
+        'edit' =>$edit);
+    //$container['upload_directory'] = __DIR__ . '/uploads';
+    $db = new DbHandler();
+    $path = $_SERVER['DOCUMENT_ROOT'] . "/deslog/deslog/img/educare/";
+    $deleteService = $db->deleteOneRecord($tabble_name, $id);
+    $isServiceExists = $db->getOneRecord("select 1 from ".$tabble_name." where image_url='$file_name' or intro = '$attachment'");
+    //$deleteBanner = $db->deleteOneRecord($tabble_name, $id);
+    if($deleteService){
+        if (!$isServiceExists) {
+            $result = $db->insertIntoTable($image, $column_names, $tabble_name);
+            if ($result != NULL) {
+            
+                move_uploaded_file($file_tmp, $path .$file_name);
+                $response["status"] = "Success";
+                $response["message"] = "Your file has been save successfully";
+                echoResponse(200, $response);
+            }else{
+                $response["status"] = "error";
+                $response["message"] = "requested action could not be completed. something technical but don't worry we're on it!";
+                echoResponse(201, $response);
+            }
+        } else {
+        $response["status"] = "error";
+        $response["message"] = "it appears this banner already exist in this system!";
+        echoResponse(201, $response);
+        }
+    }else{
+        $response["status"] = "error";
+        $response["message"] = "There seems to be a problem with overwritting the previous file. Try again in awhile!";
+        echoResponse(201, $response);
+    }
+ }
+});
+//###################################################################################
+//              service api ends here
+//###################################################################################
+$app->post('/uploader', function() use ($app) {
+    $response = array();
+    $attachment = $_POST['intro'];
+    if(isset($_FILES['image'])){
+      $file_name = $_FILES['image']['name'];
+      $file_size = $_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      $file_type=$_FILES['image']['type'];
+      $tmp = explode('.', $file_name);
+      $file_extension = end($tmp);
+      $file_ext=strtolower($file_extension);
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+          $response["status"] = "error";
+         $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+         echoResponse(201, $response);
+         
+      }
+      
+      if($file_size > 2097152){
+         $response["status"] = "error";
+         $response["message"]='File size must be excately 2 MB';
+         echoResponse(201, $response);
+      }
+      $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+      //warning! file name overwriten here 
+      $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
       //##############################################################
       //                db methods here
       //##############################################################
@@ -266,12 +528,149 @@ $app->post('/uploader', function() use ($app) {
     $image = (object) array('image_url' => $file_name, 'intro' => $attachment);
     //$container['upload_directory'] = __DIR__ . '/uploads';
     $db = new DbHandler();
-    
+    $path = $_SERVER['DOCUMENT_ROOT'] . "/deslog/deslog/img/banner/";
     $isBannerExists = $db->getOneRecord("select 1 from bannerimage where image_url='$file_name' or intro = '$attachment'");
     if (!$isBannerExists) {
         $result = $db->insertIntoTable($image, $column_names, $tabble_name);
         if ($result != NULL) {
-            move_uploaded_file($file_tmp,"posters/".$file_name);
+            
+            move_uploaded_file($file_tmp, $path .$file_name);
+            $response["status"] = "Success";
+            $response["message"] = "Your file has been uploaded successfully";
+            echoResponse(200, $response);
+        }else{
+            $response["status"] = "error";
+            $response["message"] = "it appears something bad happened. you needn't worry, we're on it";
+            echoResponse(201, $response);
+        }
+    } else {
+        $response["status"] = "error";
+        $response["message"] = "course already exists!";
+        echoResponse(201, $response);
+    }
+}
+});
+$app->post('/uploadupdatenow', function() use ($app) {
+    $response = array();
+    $attachment = $_POST['intro'];
+    //$attachment = $_POST['intro'];
+    $previousFileName = $_POST['image_url'];
+    $id = $_POST['id'];
+    if(isset($_FILES['image'])){
+      $file_name = $_FILES['image']['name'];
+      $file_size = $_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      $file_type=$_FILES['image']['type'];
+      $tmp = explode('.', $file_name);
+      $file_extension = end($tmp);
+      $file_ext=strtolower($file_extension);
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+          $response["status"] = "error";
+         $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+         echoResponse(201, $response);
+         
+      }
+      
+      if($file_size > 2097152){
+         $response["status"] = "error";
+         $response["message"]='File size must be excately 2 MB';
+         echoResponse(201, $response);
+      }
+      $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+      //warning! file name overwriten here 
+      $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
+      //##############################################################
+      //                db methods here
+      //##############################################################
+    $tabble_name = "bannerimage";
+    $column_names = array('image_url', 'intro');
+    require_once './Image.php';
+    //$image = new Image($attachment,$file_name);
+    $image = (object) array('image_url' => $file_name, 'intro' => $attachment);
+    //$container['upload_directory'] = __DIR__ . '/uploads';
+    $db = new DbHandler();
+    $path = $_SERVER['DOCUMENT_ROOT'] . "/deslog/deslog/img/banner/";
+    $deleteBanner = $db->deleteOneRecord($tabble_name, $id);
+    $isBannerExists = $db->getOneRecord("select 1 from bannerimage where image_url='$file_name' or intro = '$attachment'");
+    //$deleteBanner = $db->deleteOneRecord($tabble_name, $id);
+    if($deleteBanner){
+        if (!$isBannerExists) {
+            $result = $db->insertIntoTable($image, $column_names, $tabble_name);
+            if ($result != NULL) {
+            
+                move_uploaded_file($file_tmp, $path .$file_name);
+                $response["status"] = "Success";
+                $response["message"] = "Your file has been save successfully";
+                echoResponse(200, $response);
+            }else{
+                $response["status"] = "error";
+                $response["message"] = "requested action could not be completed. something technical but don't worry we're on it!";
+                echoResponse(201, $response);
+            }
+        } else {
+        $response["status"] = "error";
+        $response["message"] = "it appears this banner already exist in this system!";
+        echoResponse(201, $response);
+        }
+    }else{
+        $response["status"] = "error";
+        $response["message"] = "There seems to be a problem with overwritting the previous file. Try again in awhile!";
+        echoResponse(201, $response);
+    }
+ }
+});
+
+$app->post('/updatebanner', function() use ($app) {
+    $response = array();
+    $attachment = $_POST['intro'];
+    $previousFileName = $_POST['image_url'];
+    $id = $_POST['id'];
+    if(isset($_FILES['image'])){
+      $file_name = $_FILES['image']['name'];
+      $file_size = $_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      $file_type=$_FILES['image']['type'];
+      $tmp = explode('.', $file_name);
+      $file_extension = end($tmp);
+      $file_ext=strtolower($file_extension);
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+          $response["status"] = "error";
+         $response["message"]="extension not allowed, please choose a JPEG or PNG file.";
+         echoResponse(201, $response);
+         
+      }
+      
+      if($file_size > 2097152){
+         $response["status"] = "error";
+         $response["message"]='File size must be excately 2 MB';
+         echoResponse(201, $response);
+      }
+      $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+      //warning! file name overwriten here 
+      $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
+      //##############################################################
+      //                db methods here
+      //##############################################################
+    $tabble_name = "bannerimage";
+    $column_names = array('image_url', 'intro');
+    require_once './Image.php';
+    //$image = new Image($attachment,$file_name);
+    $image = (object) array('image_url' => $file_name, 'intro' => $attachment);
+    //$container['upload_directory'] = __DIR__ . '/uploads';
+    $db = new DbHandler();
+    $path = $_SERVER['DOCUMENT_ROOT'] . "/deslog/deslog/img/banner/";
+    $isBannerExists = $db->getOneRecord("select 1 from bannerimage where image_url='$file_name' or intro = '$attachment' or id='$id'");
+    if ($isBannerExists) {
+        $result = $db->updateTable($image, $column_names, $tabble_name, $id);
+        if ($result != NULL) {
+            
+            move_uploaded_file($file_tmp, $path .$file_name);
             $response["status"] = "Success";
             $response["message"] = "Your file has been save successfully";
             echoResponse(200, $response);
@@ -293,5 +692,38 @@ $app->post('/uploader', function() use ($app) {
    }
 });
 
-
+$app->post('/whoweare', function() use ($app) {
+    $response = array();
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('heading', 'intro', 'content'), $r->content);
+    require_once 'passwordHash.php';
+    $db = new DbHandler();
+    $heading = $r->content->heading;
+    //$middlename = $r->customer->middlename;
+    $intro = $r->content->intro;
+    //$content = $r->content->content;
+    $r->content->edit = "false";
+    $tabble_name = "who_we_are";
+    $isExists = $db->getOneRecord("select 1 from " .$tabble_name." where heading='$heading' and intro='$intro'");
+    if (!$isExists) {
+    $column_names = array('heading', 'intro', 'content', 'edit');
+        $result = $db->insertIntoTable($r->content, $column_names, $tabble_name);
+        if (is_integer($result)) {
+            $response["status"] = "success";
+            $response["message"] = "content created successfully";
+            $response["result"] = $result;
+            echoResponse(200, $response);
+            
+            
+        } else {
+            $response["status"] = "error";
+            $response["message"] = "Failed to create content. Please try again";
+            echoResponse(201, $response);
+        }
+    } else {
+        $response["status"] = "error";
+        $response["message"] = "content already exists!";
+        echoResponse(201, $response);
+    }
+});
 ?>

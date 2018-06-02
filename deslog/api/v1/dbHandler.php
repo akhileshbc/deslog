@@ -17,15 +17,39 @@ class DbHandler {
         $r = $this->conn->query($query.' LIMIT 1') or die($this->conn->error.__LINE__);
         return $result = $r->fetch_assoc();    
     }
-    
+    /**
+     * Delete a single record
+     */
+    public function deleteOneRecord($tabble_name, $id){
+        $del_sql = "DELETE FROM ".$tabble_name." WHERE id = ".$id;
+        $r = $this->conn->query($del_sql) or die($this->conn->error.__LINE__);
+        if ($r) {
+            //$new_remove_id = $this->conn->delete_id;
+            return $r;
+            } else {
+            return NULL;
+        }
+ 
+    }
+
+
     /**
      * Fetching all record
      */
     public function getallRecord($query) {
         $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
-        return $result = $r->fetch_assoc();    
+        $results = array();
+        while ($row = $r->fetch_assoc()) {
+            $results[] = $row;
+        
+        }
+        return $results;
+//        while($r->fetch_assoc() != NULL){
+//           $result []= $r->fetch_assoc(); 
+//        }
+//        return $result;    
     }
-    /**
+    /**eturn $result
      * Creating new record
      */
     public function insertIntoTable($obj, $column_names, $table_name) {
@@ -44,11 +68,40 @@ class DbHandler {
             $values = $values."'".$$desired_key."',";
         }
         $query = "INSERT INTO ".$table_name."(".trim($columns,',').") VALUES(".trim($values,',').")";
+        
         $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
 
         if ($r) {
             $new_row_id = $this->conn->insert_id;
             return $new_row_id;
+            } else {
+            return NULL;
+        }
+    }
+    public function updateTable($obj, $column_names, $table_name, $bannerid) {
+        
+        $c = (array) $obj;
+        $id = $bannerid;
+        $keys = array_keys($c);
+        $columns = '';
+        $values = '';
+        foreach($column_names as $desired_key){ // Check the obj received. If blank insert blank into the array.
+           if(!in_array($desired_key, $keys)) {
+                $$desired_key = '';
+            }else{
+                $$desired_key = $c[$desired_key];
+            }
+            $columns = $columns.$desired_key.',';
+            $values = $values."'".$$desired_key."',";
+        }
+        //$query = "INSERT INTO ".$table_name."(".trim($columns,',').") VALUES(".trim($values,',').")";
+        //mysql_query("UPDATE blogEntry SET content = '$udcontent', title = '$udtitle' WHERE id = $id");
+        $query = "UPDATE ".$table_name." SET "."(".trim($columns,',').") = VALUES(".trim($values,',').")" ." WHERE id = '$id'" ;
+        $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+
+        if ($r) {
+            $new_row_id_update = $this->conn->insert_id;
+            return $new_row_id_update;
             } else {
             return NULL;
         }
