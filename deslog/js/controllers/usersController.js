@@ -371,7 +371,7 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
     $scope.testimony = false;
     $scope.testimonyData = [
         {
-            testphoto: 'img/testimonial/avatar-6.jpg',
+            testphoto: './img/testimonial/avatar-6.jpg',
             testcontent: 'hello world',
             testby: 'ekene sunday',
             jobposition: 'web developer',
