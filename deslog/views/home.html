@@ -92,23 +92,22 @@
             <h1><span> </span></h1>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 wow fadeInLeft delay-04s ">
+            <div ng-repeat="s in m.servicedata" class="col-lg-4 col-md-4 col-sm-6 col-xs-12 wow fadeInLeft delay-04s ">
                 <!-- Course box start -->
                 <div class="course-box box">
                     <!--header -->
                     <div class="header clearfix">
-                        <img src="img/educare/edu-2.jpg" alt="edu-2" class="img-responsive">
+                        <img src="img/educare/{{s.filename}}" alt="edu-2" class="img-responsive">
                     </div>
                     <!-- Detail -->
                     <div class="detail clearfix">
 
                         <h3>
-                            <a href data-toggle="modal" data-target="#myModal">Training and Certifications</a>
+                            <a href="{{s.servicepageurl}}" data-toggle="modal" data-target="#myModal">{{s.servicetitle}}</a>
                         </h3>
 
-                        <p>
-                            We offer range of oil & gas, HSE and management courses and issue certificates that are accepted all over the world: 
-                            our trainings are comprehensive, cost-effective...
+                        <p>{{s.serviceabout}}
+                           
                             <button style="color:#eb5800" type="button" class="btn " data-toggle="modal" data-target="#myModal">Learn More</button>
 
                         </p>
@@ -124,12 +123,11 @@
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                                         <h3 style="color: #eb5800" class="modal-title">
-                                            <a  href="courses-details.html" >Training and Certifications</a>
+                                            <a  href="courses-details.html" >{{s.servicetitle}}</a>
                                         </h3>
                                     </div>
                                     <div class="modal-body">
-                                        <p>We offer range of oil & gas, HSE and management courses and issue certificates that are accepted all over the world: 
-                                            our trainings are comprehensive, cost-effective and most times tailored to meet organizational specific needs. Whether small or large, local or multinational organization we can offer you specialized courses based on real-life situations. 
+                                        <p>{{s.serviceabout}}
                                         </p>
                                     </div>
                                     <div class="modal-footer">
@@ -143,107 +141,7 @@
                 </div>
                 <!-- Course box end -->
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 hidden-sm wow fadeInUp delay-04s">
-                <!-- Course box start -->
-                <div class="course-box box">
-                    <!--header -->
-                    <div class="header clearfix">
-                        <img src="img/educare/edu-3.jpg" alt="edu-3" class="img-responsive">
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
 
-                        <h3>
-                            <a href>Inspection, Test and Corrosion Control</a>
-                        </h3>
-
-
-                        <p>
-                            Deslog Energy Services Limited (DESL) is a leading company that provides lifting inspections, non destructive testing and corrosion control with the use of wide range of advanced...
-                            <button style="color:#eb5800" type="button" class="btn " data-toggle="modal" data-target="#myModal1">Learn More</button>
-
-                        </p>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal1" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                        <h3 style="color: #eb5800" class="modal-title">
-                                            <a  href>Inspection, Test and Corrosion Control</a>
-                                        </h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            Deslog Energy Services Limited (DESL) is a leading company that provides lifting inspections, non destructive testing and corrosion control with the use of wide range of advanced technologies to meet customers’ requirement in accordance to national and international standards. We have built capacity for effective and timely delivery at both offshore and onshore locations. Our engineers are highly trained and seasoned professionals with many years of field experience, they works round the clock to ensure our clients’ satisfactions 
-
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Course box end -->
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 wow fadeInRight delay-04s">
-                <!-- Course box start -->
-                <div class="course-box box">
-                    <!--header -->
-                    <div class="header clearfix">
-                        <img src="img/educare/edu-1.jpg" alt="edu-1" class="img-responsive">
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-
-                        <h3>
-                            <a href >QHSE and Technical Consultancy</a>
-                        </h3>
-
-                        <p>
-                            Our QHSE and technical consultancy services are provided by a team of experts, renowned engineers with hands-on expertise in helping you address issues relating to...
-
-                            <button style="color:#eb5800" type="button" class="btn " data-toggle="modal" data-target="#myModal2">Learn More</button>
-
-                        </p>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal2" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                        <h3 style="color: #eb5800" class="modal-title">
-                                            <a  href>QHSE and Technical Consultancy</a>
-                                        </h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            Our QHSE and technical consultancy services are provided by a team of experts, renowned engineers with hands-on expertise in helping you address issues relating to quality, risk, health and safety, environment, technology and social responsibility needs to meet your business goals. Our project and program management experts can assure a smooth implementation of the recommended changes and lead you through a successful transformation.
-
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- Course box end -->
-            </div>
         </div>
     </div>
 </div>
@@ -257,7 +155,8 @@
             <h1 style="color: #eb5800">Our <span class="custom">Policy Statement</span></h1>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wow fadeInLeft delay-04s">
+            
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 hidden-sm wow fadeInUp delay-04s" ng-repeat="d in m.policyData">
                 <!-- Course box start -->
                 <div class="course-box box-2 box">
                     <!--header -->
@@ -268,84 +167,19 @@
                     <div class="detail clearfix">
 
                         <h3>
-                            <a href >Corporate Social Responsibility</a>
+                            <a href >{{d.policytitle}} </a>
                         </h3>
 
+
                         <p>
-                            As a standard corporate organization we maintain community-friendly policies that focuses on the best interest of our host community 
+                            {{d.policycontent}}
                         </p>
                         <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">
                             Learn More
                         </md-button>
                     </div>
                 </div>
-                <div class="course-box box-2 box">
-                    <!--header -->
-                    <div class="header clearfix">
-
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-
-                        <h3>
-                            <a href >QHSE Policy</a>
-                        </h3>
-
-                        <p>
-                            We instituted and currently maintain safety policies that aim at improving workers health and welfare 
-                        </p>
-                        <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">
-                            Learn More
-                        </md-button>
-                    </div>
-                </div>
-                <!-- Course box end -->
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 hidden-sm wow fadeInUp delay-04s">
-                <!-- Course box start -->
-                <div class="course-box box-2 box">
-                    <!--header -->
-                    <div class="header clearfix">
-
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-
-                        <h3>
-                            <a href >Quality Assurance Policy </a>
-                        </h3>
-
-
-                        <p>
-                            We are committed to the concept of: Sustaining & improving the quality of services provided to our customers 
-                        </p>
-                        <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">
-                            Learn More
-                        </md-button>
-                    </div>
-                </div>
-                <div class="course-box box-2 box">
-                    <!--header -->
-                    <div class="header clearfix">
-
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-
-                        <h3>
-                            <a href >Quality Assurance Policy </a>
-                        </h3>
-
-
-                        <p>
-                            We are committed to the concept of: Sustaining & improving the quality of services provided to our customers 
-                        </p>
-                        <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">
-                            Learn More
-                        </md-button>
-                    </div>
-                </div>
-                <!-- Course box end -->
+                
             </div>
 
         </div>
@@ -542,13 +376,13 @@
                                 </div>
                             </div>
                             <!-- Controls -->
-                            <a class="left carousel-control" href="#carouse3-example-generic" role="button" data-slide="prev">
+                            <a target="_self" class="left carousel-control" href="#carouse3-example-generic" role="button" data-slide="prev">
                                 <span class="slider-mover-left" aria-hidden="true">
                                     <i class="fa fa-angle-left"></i>
                                 </span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="right carousel-control" href="#carouse3-example-generic" role="button" data-slide="next">
+                            <a target="_self" class="right carousel-control" href="#carouse3-example-generic" role="button" data-slide="next">
                                 <span class="slider-mover-right" aria-hidden="true">
                                     <i class="fa fa-angle-right"></i>
                                 </span>

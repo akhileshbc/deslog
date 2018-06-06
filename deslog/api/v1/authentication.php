@@ -232,23 +232,138 @@ $app->get('/bannerData', function() {
         echoResponse(201, $response);
     }
 });
-$app->get('/whoweare', function() {
+
+//##############################################################################
+//   policy data manipulation api
+//##############################################################################
+$app->get('/policy', function() {
     $response = array();
     $db = new DbHandler();
-    $table_name = "who_we_are";
-    $getAllBanner = $db->getallRecord("SELECT * FROM $table_name");
-    if ($getAllBanner) {
-        //$response["status"] = "success";
-        //$response["message"] = "course is being shipped in now successfully";
-        $response["data"] = $getAllBanner;
+    $table_name = "policy";
+    $getpolicies = $db->getallRecord("SELECT * FROM $table_name");
+    if ($getpolicies) {
+        $response["status"] = "success";
+        $response["message"] = "course is being shipped in now successfully";
+        $response["data"] = $getpolicies;
         //$response["status"] = "success";
         echoResponse(200, $response);
     } else {
         $response["status"] = "error";
-        $response["message"] = $table_name . "There's no course data to display";
+        $response["message"] = "it's seems there's nothing to show";
         echoResponse(201, $response);
     }
 });
+$app->post('/savepolicy', function() use ($app) {
+    $response = array();
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('policytitle', 'policycontent', 'policypageurl'), $r->policy);
+    //require_once 'passwordHash.php';
+    $db = new DbHandler();
+    $policytitle = $r->policy->policytitle;
+    //$policypageurl = $r->policy->policypageurl;
+    $policycontent = $r->policy->policycontent;
+    //$content = $r->content->content;
+    $r->policy->edit = "false";
+    $tabble_name = "policy";
+    $isExists = $db->getOneRecord("select 1 from " .$tabble_name." where policytitle='$policytitle' and policycontent='$policycontent'");
+    if (!$isExists) {
+    $column_names = array('policytitle', 'policycontent', 'policypageurl', 'edit');
+        $result = $db->insertIntoTable($r->policy, $column_names, $tabble_name);
+        if (is_integer($result)) {
+            $response["status"] = "success";
+            $response["message"] = "policy content created successfully";
+            $response["data"] = $result;
+            echoResponse(200, $response);
+            
+            
+        } else {
+            $response["status"] = "error";
+            $response["message"] = "Failed to create policy content. Please try again";
+            echoResponse(201, $response);
+        }
+    } else {
+        $response["status"] = "error";
+        $response["message"] = "policy content already exists!";
+        echoResponse(201, $response);
+    }
+});
+// not implemented yet
+$app->post('/updatepolicy', function() use ($app) {
+    $response = array();
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('policytitle', 'policycontent', 'policypageurl'), $r->policy);
+    //require_once 'passwordHash.php';
+    $db = new DbHandler();
+    //$policytitle = $r->policy->policytitle;
+    
+    //$policycontent = $r->policy->policycontent;
+     $prepolicyid = $r->policy->prepolicyid;
+    $prepolicytitle = $r->policy->prepolicytitle;
+    $r->policy->edit = "false";
+    $table_name = "policy";
+    $isExists = $db->getOneRecord("select 1 from " .$table_name." where policytitle='$prepolicytitle' and id='$prepolicyid'");
+    if ($isExists) {
+        $deletePolicy = $db->deleteOneRecord($table_name, $prepolicyid);
+        if($deletePolicy){
+            $column_names = array('policytitle', 'policycontent', 'policypageurl', 'edit');
+            $result = $db->insertIntoTable($r->policy, $column_names, $table_name);
+            if (is_integer($result)) {
+            $response["status"] = "success";
+            $response["message"] = "policy content updated successfully";
+            $response["result"] = $result;
+            echoResponse(200, $response);
+            
+            
+            } else {
+                $response["status"] = "error";
+                $response["message"] = "Failed to update policy content. Please try again";
+                echoResponse(201, $response);
+            }
+        }
+        
+        
+    } else {
+        $response["status"] = "error";
+        $response["message"] = "Sorry. Policy does'nt exists.!";
+        $response["data"] = $isExists;
+        echoResponse(201, $response);
+    }
+});
+$app->post('/deletepolicy', function() use ($app){
+    $response = array();
+    
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('id', 'policycontent'), $r->policy);
+    $id = $r->policy->id;
+    $policytitle = $r->policy->policytitle;
+    //$policycontent = $r->policy->policycontent;
+    $table_name = "policy";
+    //$table_name = "bannerimage";
+    $db = new DbHandler();
+    $isExists = $db->getOneRecord("select 1 from " .$table_name." where policytitle='$policytitle' and id='$id'");
+    if($isExists){
+        $deletePolicy = $db->deleteOneRecord($table_name, $id);
+        if ($deletePolicy) {
+            //$response["status"] = "success";
+            $response["status"] = "success";
+            $response["data"] = $deletePolicy;
+            $response["message"] = "Policy with ID: $id is been deleted successfully";
+            echoResponse(200, $response);
+        } else {
+            $response["status"] = "error";
+            $response["message"] =  "sorry. Delete action could not be completed try again";
+            echoResponse(201, $response);
+        }
+    }else{
+        $response["status"] = "error";
+        $response["message"] =  "sorry. there's seems to be no such record";
+        echoResponse(201, $response);
+    }
+    
+});
+//##############################################################################
+//              policy ends here
+//##############################################################################
 
 
 $app->post('/deleteBanner', function() use ($app){
@@ -385,10 +500,11 @@ $app->post('/createservice', function() use ($app) {
     //$deleteBanner = $db->deleteOneRecord($tabble_name, $id);
     //if($deleteService){
         if (!$isServiceExists) {
+            move_uploaded_file($file_tmp, $path .$file_name);
             $result = $db->insertIntoTable($image, $column_names, $table_name);
             if ($result != NULL) {
             
-                move_uploaded_file($file_tmp, $path .$file_name);
+                
                 $response["status"] = "Success";
                 $response["message"] = "Your file has been save successfully";
                 echoResponse(200, $response);
@@ -518,9 +634,9 @@ $app->post('/uploader', function() use ($app) {
       $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
       //warning! file name overwriten here 
       $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
-      //##############################################################
+      
       //                db methods here
-      //##############################################################
+      
     $tabble_name = "bannerimage";
     $column_names = array('image_url', 'intro');
     require_once './Image.php';
@@ -582,9 +698,9 @@ $app->post('/uploadupdatenow', function() use ($app) {
       $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
       //warning! file name overwriten here 
       $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
-      //##############################################################
+      
       //                db methods here
-      //##############################################################
+      
     $tabble_name = "bannerimage";
     $column_names = array('image_url', 'intro');
     require_once './Image.php';
@@ -654,9 +770,9 @@ $app->post('/updatebanner', function() use ($app) {
       $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
       //warning! file name overwriten here 
       $file_name = sprintf('%s.%0.8s', $basename, $file_ext);
-      //##############################################################
+      
       //                db methods here
-      //##############################################################
+      
     $tabble_name = "bannerimage";
     $column_names = array('image_url', 'intro');
     require_once './Image.php';
@@ -691,7 +807,9 @@ $app->post('/updatebanner', function() use ($app) {
 //      }
    }
 });
-
+//##########################################################################
+//          who we are data is saved here from ui
+//##########################################################################
 $app->post('/whoweare', function() use ($app) {
     $response = array();
     $r = json_decode($app->request->getBody());
@@ -723,6 +841,24 @@ $app->post('/whoweare', function() use ($app) {
     } else {
         $response["status"] = "error";
         $response["message"] = "content already exists!";
+        echoResponse(201, $response);
+    }
+});
+//          get who we are data
+$app->get('/whoweare', function() {
+    $response = array();
+    $db = new DbHandler();
+    $table_name = "who_we_are";
+    $getAllBanner = $db->getallRecord("SELECT * FROM $table_name");
+    if ($getAllBanner) {
+        $response["status"] = "success";
+        $response["message"] = "course is being shipped in now successfully";
+        $response["data"] = $getAllBanner;
+        //$response["status"] = "success";
+        echoResponse(200, $response);
+    } else {
+        $response["status"] = "error";
+        $response["message"] = $table_name . "There's no course data to display";
         echoResponse(201, $response);
     }
 });

@@ -118,6 +118,108 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
         });
         handler.openIframe();
     };
+    //######################################################################
+    //      policy data and function
+    //######################################################################
+    $scope.newsPolicy = false;
+    $scope.policyMessage = "";
+    $scope.updatePolicy = false; //unused variable
+    var data;
+    $scope.policyData = data || [];
+    // this is a toggle function
+    $scope.newPolicy = function(){
+        
+        if($scope.newsPolicy == false){
+            $scope.newsPolicy = true;
+        }else{
+            $scope.newsPolicy = false;
+        }
+        
+    };
+    $scope.updatesPolicy = function(obj){
+        //console.log(obj);
+        if(obj.edit == false){
+            obj.edit = true;
+            //console.log(obj);
+        }else{
+            obj.edit = false;
+            //console.log(obj);
+        }
+        
+    };
+    //policy data
+    function fetchdata(){
+         pageContent.get('policy').then(function(data){
+            if(data.status == "success"){
+                $scope.policyData  = data.data;
+            //console.log(data.data);
+            //console.log($scope.policyData);
+            }
+        });
+    }
+    fetchdata();
+    $scope.deletePolicy = function(obj){
+        $scope.policyMessage = "processing delete request. please wait...";
+        //return;
+        pageContent.post('deletepolicy', {policy: obj}).then(function(results){
+            $scope.policyMessage =  results.message;
+                setTimeout(function(){
+                        console.log(results.message);
+                        console.log(results.data);
+                        $scope.policyMessage = "";
+                        $scope.$apply();
+                    }, 4000);
+                    fetchdata();
+        });
+    };
+    // this saves policy
+    $scope.savePolicy = function(event, policy, previousobj){
+        var api = 'updatepolicy';
+        if(event.currentTarget.id == "new"){
+            api = 'savepolicy';
+            $scope.policyMessage = "please hold while we hit the server.";
+            pageContent.post(api, {policy: policy}).then(function(results){
+                $scope.policyMessage =  results.message;
+                setTimeout(function(){
+                        console.log(results.message);
+                        console.log(results.data);
+                        $scope.policyMessage = "";
+                        $scope.$apply();
+                    }, 4000);
+                    if(results.status == "success"){
+                        $scope.newPolicy();
+                        fetchdata();
+                    }
+            }); 
+        }else{
+            if(previousobj != undefined){
+            policy.prepolicytitle = previousobj.policytitle;
+            policy.prepolicycontent = previousobj.policycontent;
+            policy.prepolicyid = previousobj.id;
+            policy.prepolicypageurl = previousobj.policypageurl;
+            //console.log(policy);
+            //return;
+            $scope.policyMessage = "Running update command. please wait while task is being completed.";
+            console.log(policy);
+            pageContent.post(api, {policy: policy}).then(function(results){
+                $scope.policyMessage =  results.message;
+                setTimeout(function(){
+                        console.log(results.message);
+                        console.log(results.data);
+                        $scope.policyMessage = "";
+                        $scope.$apply();
+                    }, 4000);
+                    fetchdata();
+                    $scope.updatePolicy = false;
+            });
+            }else{
+                $scope.policyMessage = "its appears something is wrong somewhere. please try again!";
+            }
+            
+        }
+        
+    };
+    
     //##########################################################################
     //                  Home Page Banner Data
     //##########################################################################
@@ -173,48 +275,8 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
     //        service object, function data
     //##################################################################
     
-    $scope.servicesdata = [
-        {
-            serviceimage: 'img/educare/edu-2.jpg',
-            aboutservice: 'welcome to deslog energy',
-            servicetitle: 'gas clearanceand all enquiries',
-            servicepageurl: '/service/image',
-            edit: false
-            
-        },
-        {
-            serviceimage: 'img/educare/edu-2.jpg',
-            aboutservice: 'welcome to deslog energy',
-            servicetitle: 'gas clearanceand all enquiries',
-            servicepageurl: '/service/image',
-            edit: false
-        },
-        {
-            serviceimage: 'img/educare/edu-2.jpg',
-            aboutservice: 'welcome to deslog energy',
-            servicetitle: 'gas clearanceand all enquiries',
-            servicepageurl: '/service/image',
-            edit: false
-            
-        },
-        {
-           serviceimage: 'img/educare/edu-2.jpg',
-            aboutservice: 'welcome to deslog energy',
-            servicetitle: 'gas clearanceand all enquiries',
-            servicepageurl: '/service/image',
-            edit: false
-            
-        },
-        {
-            serviceimage: 'img/educare/edu-2.jpg',
-            aboutservice: 'welcome to deslog energy',
-            servicetitle: 'gas clearanceand all enquiries',
-            servicepageurl: '/service/image',
-            edit: false
-            
-        }
-        
-    ];
+    $scope.servicesdata = [];
+  
     // variable determining state of components
     $scope.newService = false;
     $scope.uploadService = null; // messaging varible to pass returned promise message
@@ -301,7 +363,71 @@ myApp.controller('usersController', function($scope, $rootScope, $routeParams, $
                     }, 4000);
                 }
             });
-    }
+    };
+    //###################################################################
+    //      Testimony function and data
+    //###################################################################
+    $scope.testimonyMessage = "";
+    $scope.testimony = false;
+    $scope.testimonyData = [
+        {
+            testphoto: 'img/testimonial/avatar-6.jpg',
+            testcontent: 'hello world',
+            testby: 'ekene sunday',
+            jobposition: 'web developer',
+            edit: "false"
+        }   ]; //array of jason object
+    //toggle button function
+    $scope.createTestimony = function(){
+        if($scope.testimony === false){//strike equality. i try to avoid it but just want to try it out.
+            $scope.testimony = true;
+        }else{
+            $scope.testimony = false;
+        }
+    };
+
+    $scope.updateTestimony = function(obj){
+        console.log(obj);
+        if(obj === undefined){
+            return; //do nothing
+        }else{
+            if(obj.edit === false){
+                obj.edit = true;
+            }else{
+                obj.edit = false;
+            }
+        }
+        
+    };
+    
+    $scope.deleteTestimony = function(obj){
+        if(obj !== undefined){
+            $scope.testimonyMessage = "please wait while we complete the delete operation";
+            pageContent.post('deletetestimony', {testimonys: obj}).then(function(results){
+                if (results.status) {
+                $scope.testimonyMessage = results.message;
+                setTimeout(function(){
+                    
+                    $scope.$apply(function(){
+                        obj.edit = false;
+                        $scope.testimonyMessage = "";
+                    });
+                }, 4000);
+                //refreshpage(); 
+            }else{
+                if(results.status === null || results.status === undefined){
+                    $scope.testimonyMessage = "Something is wrong somewhere. please try again";
+                }
+            }
+            });
+        }else{
+            return; //exit this function
+        }
+    };
+    
+    //###################################################################
+    //      Testimony function and data end
+    //###################################################################
     //###################################################################
     // service object, function and data ends here
     //###################################################################

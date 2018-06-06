@@ -50,7 +50,7 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
             });
         };
         //#####################################################################
-        //          home page banner and others
+        //          home page banner and others data
         //#####################################################################
         pageContent.get('bannerData').then(function(data) {
             //console.log("Scouting for home page banner data now. please wait!");
@@ -75,6 +75,27 @@ myApp.controller('courseController',['$scope', '$rootScope', '$routeParams', '$l
         if(data.status == "success"){
             
          }
+    });
+    //##########################################################################
+    //          Policy Data 
+    //##########################################################################
+    that.policyData;
+    function fetchdata(){
+         pageContent.get('policy').then(function(data){
+            if(data.status == "success"){
+                that.policyData  = data.data;
+            //console.log(data.data);
+            //console.log($scope.policyData);
+            }
+        });
+    }
+        fetchdata();
+     // data being fetch from the database
+     that.servicedata;
+    pageContent.get('servicedata').then(function(data) {
+        console.log("Scouting for services data. please waiting! homepage");
+        console.log(data.data);
+        that.servicedata = data.data ;
     });
         //###########################################################################
         //       DISCOUNTED COURSES

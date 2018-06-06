@@ -6,10 +6,10 @@
 
     </span>
     <ul class="navbar-nav-custom">
+<!--        <li><a href="#">Home</a></li>
         <li><a href="#">Home</a></li>
         <li><a href="#">Home</a></li>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>-->
     </ul>
 </nav>
 <div id="side-menu" class="side-nav">
@@ -242,6 +242,257 @@
                                 <!-- Course box end -->
                             </div>
                         </div>
+                    </div>
+                    <!--Policy section here-->
+                    <div class="course-features">
+                        <h3>Policy</h3>
+                        <div >
+                            <button class="submit btn btn-info"  ng-click="newPolicy()">New/Update Testimony</button>
+
+                        </div>
+
+                        <div ng-if="newsPolicy" style="margin-top: 15px">
+                            <p class="message" style="color: red"  ng-show="policyMessage"> {{policyMessage}} <span>
+                                    <br>
+                                    <!-- Form start -->
+                                    <form name="myform" role="form" novalidate>
+                                    <!--<input type="file" class="form-control" name="image" file-model="myFile" hidden required>
+                                        -->
+                                        <br>
+                                        <div class="form-group">
+                                                <input type="text" name="policytitle" class="input-text form-control" placeholder="Policy title here"
+                                                       ng-model="policy.policytitle" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policytitle.$invalid && myform.policytitle.$touched">
+                                                    policy title required</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="policypageurl" class="input-text form-control" placeholder="provide policy page url or #"
+                                                       ng-model="policy.policypageurl" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policypageurl.$invalid && myform.policypageurl.$touched">
+                                                    policy page url required</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <input type="text" name="policycontent" class="input-text form-control" placeholder="provide policy content"
+                                                       ng-model="policy.policycontent" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policycontent.$invalid && myform.testcontent.$touched">
+                                                    policy content required</p>
+                                            </div>
+                                            <button id="new" class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="savePolicy( $event, policy, b)">Create</button>
+
+                                    </form> 
+                        </div>
+                        <br>
+                        <div class="row">
+                            <br>
+                            <p ng-show="policyMessage" style="color: red">{{policyMessage}}</p>
+                            <br>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " ng-repeat="p in policyData">
+                                <!-- Course box start -->
+                                <div class="course-box box">
+                                    <!--header -->
+<!--                                    <div class="header clearfix">
+                                        <img src="img/educare/{{c.filename}}" alt="edu-2" class="img-responsive">
+                                    </div>-->
+                                    <!-- Detail -->
+                                    <div class="detail clearfix">
+
+                                        <h3>
+                                            <a href="{{p.policypageurl}}"> {{p.policytitle}}</a>
+                                        </h3>
+                                        <p>
+                                            {{p.policycontent}}
+                                        </p>
+                                        
+                                        <a href="" id="update" class="btn button-sm button-theme" ng-click="updatesPolicy(p)">Edit</a>
+                                    <a href="" class="btn button-sm button-theme" ng-click="deletePolicy(p)">Delete</a>
+                                    <div ng-if="! p.edit">
+                                        <p>{{policyyMessage}}</p>
+                                        <form name="myform" role="form" novalidate>
+
+                                        <br>
+                                        <div class="form-group">
+                                                <input type="text" name="policytitle" class="input-text form-control" placeholder="policy title"
+                                                       ng-model="policy.policytitle" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policytitle.$invalid && myform.policytitle.$touched">
+                                                    please provide policy page title</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="policypageurl" class="input-text form-control" placeholder="policy page url[ unsure? enter this sign: #]"
+                                                       ng-model="policy.policypageurl" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policypageurl.$invalid && myform.policypageurl.$touched">
+                                                    please provide policy page url</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="policycontent" class="input-text form-control" placeholder="policy content"
+                                                       ng-model="policy.policycontent" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.policycontent.$invalid && myform.policycontent.$touched">
+                                                    please provide policy content</p>
+                                            </div>
+                                            <button id="updatenow" class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="savePolicy( $event, policy, p)">update</button>
+
+                                        </form>
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+                                <!-- Course box end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimony section-->
+                    <div class="course-features">
+                        <h3>Testimony</h3>
+                        <div >
+                            <button class="submit btn btn-info"  ng-click="createTestimony()">New/Update Testimony</button>
+
+                        </div>
+
+                        <div ng-if="testimony" style="margin-top: 15px">
+                            <p class="message" style="color: red"  ng-show="testimonyMessage"> {{testimonyMessage}} <span>
+                                    <br>
+                                    <!-- Form start -->
+                                    <form name="myform" role="form" novalidate>
+                                        <input type="file" class="form-control" name="image" file-model="myFile" hidden required>
+                                        
+                                        <br>
+                                        <div class="form-group">
+                                                <input type="text" name="testby" class="input-text form-control" placeholder="Testimony by who?"
+                                                       ng-model="testimony.testby" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.testby.$invalid && myform.testby.$touched">
+                                                    testifier is required</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="jobposition" class="input-text form-control" placeholder="job position of testifier or company"
+                                                       ng-model="testimony.jobposition" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.jobposition.$invalid && myform.jobposition.$touched">
+                                                    job position of the testifier or company</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="teststar" class="input-text form-control" placeholder="number of stars [maximum 5]"
+                                                       ng-model="testimony.teststar" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.teststar.$invalid && myform.teststar.$touched">
+                                                    stars required</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="testcontent" class="input-text form-control" placeholder="testimony here"
+                                                       ng-model="testimony.testcontent" ng-required="true">
+                                                <p class="error validationerror"
+                                                   ng-show="myform.testcontent.$invalid && myform.testcontent.$touched">
+                                                    testimony required</p>
+                                            </div>
+                                            <button id="new" class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="savePolicy( $event, policy, b)">Create</button>
+
+                                    </form> 
+                        </div>
+                        <br>
+                        <div class="row">
+                            <br>
+                            <p ng-show="testimonyMessage" style="color: red">{{testimonyMessage}}</p>
+                            <br>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " ng-repeat="q in testimonyData">
+                                <div class="item content clearfix">
+                                    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
+                                        <div class="avatar">
+                                            <img src="img/testimonial/{{q.testphoto}}" alt="testimony photo" class="img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                                        <div class="text">
+                                            <sup>
+                                                <i class="fa fa-quote-left"></i>
+                                            </sup>
+                                            {{q.testcontent}}
+                                            <sub>
+
+                                                <i class="fa fa-quote-right"></i>
+                                            </sub>
+                                        </div>
+                                        <div class="author-name">
+                                            {{q.testby}}
+                                        </div>
+                                        <div class="department">
+                                            {{q.jobposition}}
+                                        </div>
+                                        <ul class="rating">
+                                            <li>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star-half-full"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--content-->
+                                <a href="" id="update" class="btn button-sm button-theme" ng-click="updateTestimony(q)">Edit</a>
+                                <a href="" class="btn button-sm button-theme" ng-click="deleteTestimony(q)">Delete</a>
+                                <div ng-if="! q.edit">
+                                    <p>{{testimonyMessage}}</p>
+                                    <form name="myform" role="form" novalidate>
+                                        <input type="file" class="form-control" name="image" file-model="myFile" hidden required>
+
+                                        <br>
+                                        <div class="form-group">
+                                            <input type="text" name="testby" class="input-text form-control" placeholder="Testimony by who?"
+                                                   ng-model="testimony.testby" ng-required="true">
+                                            <p class="error validationerror"
+                                               ng-show="myform.testby.$invalid && myform.testby.$touched">
+                                                testifier is required</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="jobposition" class="input-text form-control" placeholder="job position of testifier or company"
+                                                   ng-model="testimony.jobposition" ng-required="true">
+                                            <p class="error validationerror"
+                                               ng-show="myform.jobposition.$invalid && myform.jobposition.$touched">
+                                                job position of the testifier or company</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="teststar" class="input-text form-control" placeholder="number of stars [maximum 5]"
+                                                   ng-model="testimony.teststar" ng-required="true">
+                                            <p class="error validationerror"
+                                               ng-show="myform.teststar.$invalid && myform.teststar.$touched">
+                                                stars required</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="testcontent" class="input-text form-control" placeholder="testimony here"
+                                                   ng-model="testimony.testcontent" ng-required="true">
+                                            <p class="error validationerror"
+                                               ng-show="myform.testcontent.$invalid && myform.testcontent.$touched">
+                                                testimony required</p>
+                                        </div>
+                                        <button id="update" class="submit btn btn-danger" ng-disabled="myform.$invalid" type="submit" ng-click="saveTestimony( $event, myFile, testimony, b)">Create</button>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                                <!-- Course box end -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-features">
+                        <h3></h3>
+                        
                     </div>
                 </div>
                 <div class="tab-pane fade features" id="tab2default">
